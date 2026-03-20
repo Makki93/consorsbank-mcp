@@ -177,6 +177,55 @@ public final class OrderTools {
                 OrderTransactionState.class))));
   }
 
+  public static List<SyncToolSpecification> readOnlySpecifications(
+      ConsorsbankHttpClient httpClient,
+      AppConfig appConfig) {
+    PollingWorkflow pollingWorkflow = new PollingWorkflow(httpClient, appConfig);
+
+    return List.of(
+        tool(
+            "get_orders",
+            "List orders with optional filters.",
+            Schemas.object(
+                Map.of(
+                    "no", Schemas.string("Optional order number."),
+                    "securitiesAccountNo", Schemas.string("Optional securities account number."),
+                    "wkn", Schemas.string("Optional WKN."),
+                    "isin", Schemas.string("Optional ISIN."),
+                    "tradingVenueId", Schemas.string("Optional trading venue id.")),
+                List.of()),
+            arguments -> {
+              Map<String, Object> query = new LinkedHashMap<>();
+              query.put("no", RequestArguments.optionalString(arguments, "no"));
+              query.put("securitiesAccountNo", RequestArguments.optionalString(arguments, "securitiesAccountNo"));
+              query.put("wkn", RequestArguments.optionalString(arguments, "wkn"));
+              query.put("isin", RequestArguments.optionalString(arguments, "isin"));
+              query.put("tradingVenueId", RequestArguments.optionalString(arguments, "tradingVenueId"));
+              OrderCollection response = httpClient.get("/v1/orders", query, OrderCollection.class);
+              return ToolResults.json(response);
+            }),
+        tool(
+            "get_order",
+            "Return a single order by order number.",
+            Schemas.object(Map.of("no", Schemas.string("Order number.")), List.of("no")),
+            arguments -> ToolResults.json(httpClient.get(
+                "/v1/orders/" + RequestArguments.requiredString(arguments, "no"),
+                Order.class))),
+        tool(
+            "poll_order_transaction_state",
+            "Poll an order transaction state until it reaches a terminal state.",
+            Schemas.object(Map.of("id", Schemas.string("Order transaction id.")), List.of("id")),
+            arguments -> ToolResults.json(pollingWorkflow.pollOrderTransaction(
+                RequestArguments.requiredString(arguments, "id")))),
+        tool(
+            "get_order_transaction_state",
+            "Return the current order transaction state without polling.",
+            Schemas.object(Map.of("id", Schemas.string("Order transaction id.")), List.of("id")),
+            arguments -> ToolResults.json(httpClient.get(
+                "/v1/order-transaction-states/" + RequestArguments.requiredString(arguments, "id"),
+                OrderTransactionState.class))));
+  }
+
   private static JsonSchema orderEntrySchema() {
     return Schemas.object(
         Map.ofEntries(

@@ -9,9 +9,12 @@ import io.github.makki93.consorsbank.mcp.tools.OrderTools;
 import io.github.makki93.consorsbank.mcp.tools.ServerTools;
 import io.modelcontextprotocol.json.jackson3.JacksonMcpJsonMapper;
 import io.modelcontextprotocol.server.McpServer;
+import io.modelcontextprotocol.server.McpServerFeatures.SyncToolSpecification;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.transport.StdioServerTransportProvider;
 import io.modelcontextprotocol.spec.McpSchema.ServerCapabilities;
+import java.util.ArrayList;
+import java.util.List;
 import tools.jackson.databind.json.JsonMapper;
 
 public final class Main {
@@ -35,19 +38,29 @@ public final class Main {
             Use discovery and validation tools first, and treat all trading operations as safety-sensitive.
             """)
         .capabilities(ServerCapabilities.builder().tools(true).build())
-        .toolCall(ServerTools.serverInfoTool(), (exchange, request) -> ServerTools.serverInfo(config))
-        .toolCall(
-            ServerTools.pingConsorsbankTool(),
-            (exchange, request) -> ServerTools.pingConsorsbank(httpClient))
-        .tools(AuthTools.specifications(httpClient))
-        .tools(AccountTools.specifications(httpClient))
-        .tools(MarketTools.specifications(httpClient))
-        .tools(OrderTools.specifications(httpClient, config))
+        .tools(toolSpecifications(config, httpClient))
         .build();
 
     System.err.println("consorsbank-mcp started on stdio with Java " + Runtime.version());
     if (server == null) {
       throw new IllegalStateException("Failed to initialize MCP server");
     }
+  }
+
+  static List<SyncToolSpecification> toolSpecifications(AppConfig config, ConsorsbankHttpClient httpClient) {
+    List<SyncToolSpecification> toolSpecifications = new ArrayList<>(ServerTools.specifications(config, httpClient));
+    toolSpecifications.addAll(AccountTools.specifications(httpClient));
+
+    if (config.accessMode() == AppConfig.AccessMode.READ_ONLY) {
+      toolSpecifications.addAll(AuthTools.readOnlySpecifications(httpClient));
+      toolSpecifications.addAll(MarketTools.readOnlySpecifications(httpClient));
+      toolSpecifications.addAll(OrderTools.readOnlySpecifications(httpClient, config));
+      return List.copyOf(toolSpecifications);
+    }
+
+    toolSpecifications.addAll(AuthTools.specifications(httpClient));
+    toolSpecifications.addAll(MarketTools.specifications(httpClient));
+    toolSpecifications.addAll(OrderTools.specifications(httpClient, config));
+    return List.copyOf(toolSpecifications);
   }
 }

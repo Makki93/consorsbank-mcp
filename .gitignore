@@ -27,6 +27,7 @@ logs/
 
 # Cursor / local agent artifacts
 .cursor/
+.worktrees/
 
 # Build tool cache
 .mvn/timing.properties

@@ -71,6 +71,28 @@ public final class AuthTools {
                 RequestArguments.requiredString(arguments, "id")))));
   }
 
+  public static List<SyncToolSpecification> readOnlySpecifications(ConsorsbankHttpClient httpClient) {
+    SessionTanWorkflowService sessionTanWorkflowService = new SessionTanWorkflowService(httpClient);
+
+    return List.of(
+        tool(
+            "get_authentication_data",
+            "Return supported Consorsbank authentication methods for the current user.",
+            Schemas.object(Map.of(), List.of()),
+            arguments -> ToolResults.json(sessionTanWorkflowService.getAuthenticationData())),
+        tool(
+            "get_session_level",
+            "Return the current Consorsbank session trust level.",
+            Schemas.object(Map.of(), List.of()),
+            arguments -> ToolResults.json(httpClient.get("/v1/profile/session-level", SessionLevelOut.class))),
+        tool(
+            "get_profile_transaction_state",
+            "Return a profile transaction state by id.",
+            Schemas.object(Map.of("id", Schemas.string("Profile transaction id.")), List.of("id")),
+            arguments -> ToolResults.json(sessionTanWorkflowService.getProfileTransactionState(
+                RequestArguments.requiredString(arguments, "id")))));
+  }
+
   private static SyncToolSpecification tool(
       String name,
       String description,

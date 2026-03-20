@@ -66,6 +66,34 @@ public final class MarketTools {
                 ExAnteCost.class))));
   }
 
+  public static List<SyncToolSpecification> readOnlySpecifications(ConsorsbankHttpClient httpClient) {
+    return List.of(
+        tool(
+            "get_trading_venues",
+            "List trading venues for a WKN with optional quote-based filtering.",
+            Schemas.object(
+                Map.of(
+                    "wkn", Schemas.string("Security WKN."),
+                    "isQuoteBased", Schemas.string("Optional quote based filter.")),
+                List.of("wkn")),
+            arguments -> {
+              Map<String, Object> query = new LinkedHashMap<>();
+              query.put("isQuoteBased", RequestArguments.optionalString(arguments, "isQuoteBased"));
+              TradingVenueCollection response = httpClient.get(
+                  "/v1/securities/" + RequestArguments.requiredString(arguments, "wkn") + "/tradingvenues",
+                  query,
+                  TradingVenueCollection.class);
+              return ToolResults.json(response);
+            }),
+        tool(
+            "get_ex_ante_cost",
+            "Return an ex-ante cost document by id.",
+            Schemas.object(Map.of("id", Schemas.string("Ex-ante cost id.")), List.of("id")),
+            arguments -> ToolResults.json(httpClient.get(
+                "/v1/ex-ante-costs/" + RequestArguments.requiredString(arguments, "id"),
+                ExAnteCost.class))));
+  }
+
   private static SyncToolSpecification tool(
       String name,
       String description,

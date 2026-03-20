@@ -2,6 +2,7 @@ package io.github.makki93.consorsbank.mcp.tools;
 
 import io.github.makki93.consorsbank.mcp.config.AppConfig;
 import io.github.makki93.consorsbank.mcp.http.ConsorsbankHttpClient;
+import io.modelcontextprotocol.server.McpServerFeatures.SyncToolSpecification;
 import io.modelcontextprotocol.spec.McpSchema.CallToolResult;
 import io.modelcontextprotocol.spec.McpSchema.JsonSchema;
 import io.modelcontextprotocol.spec.McpSchema.Tool;
@@ -28,8 +29,22 @@ public final class ServerTools {
         .build();
   }
 
+  public static List<SyncToolSpecification> specifications(AppConfig config, ConsorsbankHttpClient httpClient) {
+    return List.of(
+        SyncToolSpecification.builder()
+            .tool(serverInfoTool())
+            .callHandler((exchange, request) -> serverInfo(config))
+            .build(),
+        SyncToolSpecification.builder()
+            .tool(pingConsorsbankTool())
+            .callHandler((exchange, request) -> pingConsorsbank(httpClient))
+            .build());
+  }
+
   public static CallToolResult serverInfo(AppConfig config) {
     String payload = """
+        targetEnvironment: %s
+        mode: %s
         targetBaseUrl: %s
         sandboxEnabled: %s
         accessTokenConfigured: %s
@@ -37,6 +52,8 @@ public final class ServerTools {
         pollIntervalMillis: %s
         maxPollAttempts: %s
         """.formatted(
+        config.targetEnvironment().configValue(),
+        config.accessMode().configValue(),
         config.baseUrl(),
         config.sandbox(),
         config.hasAccessToken(),
