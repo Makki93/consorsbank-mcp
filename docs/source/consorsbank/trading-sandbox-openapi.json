@@ -1,0 +1,1330 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "contact": { "name": "api-support@consorsbank.de" },
+    "description": "This is the Consorsbank API description in the area of api management. The description will cover the domain sandbox incl. their management.\nPerforming requests require Authorization Header with Bearer JWT Token.",
+    "license": { "name": "License text", "url": "http://unlicense.org" },
+    "title": "Sandbox",
+    "version": "\"\""
+  },
+  "servers": [{ "url": "https://api.consorsbank.de/sandbox/trading", "description": "Generated server url" }],
+  "security": [{ "bearerAuth": [] }],
+  "paths": {
+    "/v1/ex-ante-costs/{id}": {
+      "get": {
+        "description": "Returns an ExAnteCost.",
+        "operationId": "getCost",
+        "parameters": [
+          {
+            "description": "ExAnteCost id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": { "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Cost" } } },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select ExAnteCost",
+        "tags": ["ExAnteCost"]
+      }
+    },
+    "/v1/order-changes/{no}": {
+      "get": {
+        "description": "Returns an OrderChange.",
+        "operationId": "getOrderChange",
+        "parameters": [
+          {
+            "description": "OrderChange number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderChangeOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select OrderChange",
+        "tags": ["OrderChange"]
+      },
+      "put": {
+        "description": "Updates the attributes of an OrderChange. Does not place it at a TradingVenue. Returns the updated OrderChange.",
+        "operationId": "updateOrderChange",
+        "parameters": [
+          {
+            "description": "OrderChange number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderChange" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/OrderChange" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderChangeOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Update OrderChange",
+        "tags": ["OrderChange"]
+      }
+    },
+    "/v1/order-changes/{no}/place": {
+      "post": {
+        "description": "Places an OrderChange at a TradingVenue. Returns a reference to an OrderTransactionState.",
+        "operationId": "placeOrderChange",
+        "parameters": [
+          {
+            "description": "OrderChange number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": { "application/hal+json;charset=UTF-8": { "schema": { "type": "string" } } },
+            "description": "Accepted"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Place OrderChange",
+        "tags": ["OrderChange"]
+      }
+    },
+    "/v1/order-entries": {
+      "post": {
+        "description": "Creates an OrderEntry. Does not place it at a TradingVenue. Returns a reference to the new object.",
+        "operationId": "createOrderEntry",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderEntry" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/OrderEntry" } }
+          },
+          "required": true
+        },
+        "responses": { "201": { "description": "Created" }, "400": { "description": "Input invalid" } },
+        "summary": "Create OrderEntry",
+        "tags": ["OrderEntry"]
+      }
+    },
+    "/v1/order-entries/{no}": {
+      "get": {
+        "description": "Returns an OrderEntry.",
+        "operationId": "getOrderEntry",
+        "parameters": [
+          {
+            "description": "OrderEntry number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderEntryOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource is not found" }
+        },
+        "summary": "Select OrderEntry",
+        "tags": ["OrderEntry"]
+      },
+      "put": {
+        "description": "Updates the attributes of an OrderEntry. Does not place it at a TradingVenue. Returns the updated OrderEntry.",
+        "operationId": "updateOrderEntry",
+        "parameters": [{ "in": "path", "name": "no", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderEntry" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/OrderEntry" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderEntryOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" }
+        },
+        "summary": "Update OrderEntry",
+        "tags": ["OrderEntry"]
+      }
+    },
+    "/v1/order-entries/{no}/place": {
+      "post": {
+        "description": "Places an OrderEntry at a TradingVenue. Returns a reference to an OrderTransactionState.",
+        "operationId": "placeOrderEntry",
+        "parameters": [
+          {
+            "description": "OrderEntry number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Place OrderEntry",
+        "tags": ["OrderEntry"]
+      }
+    },
+    "/v1/order-transaction-states/{id}": {
+      "get": {
+        "description": "Returns an OrderTransactionState.",
+        "operationId": "getOrderTransactionState",
+        "parameters": [
+          {
+            "description": "OrderTransactionState id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderTransaction" } }
+            },
+            "description": "Successful operation"
+          },
+          "303": { "description": "Successful operation - resource updated" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select OrderTransactionState",
+        "tags": ["OrderTransactionState"]
+      }
+    },
+    "/v1/orders": {
+      "get": {
+        "description": "Select all Orders",
+        "operationId": "getOrders",
+        "parameters": [
+          { "in": "query", "name": "no", "required": false, "schema": { "type": "string" } },
+          { "in": "query", "name": "securitiesAccountNo", "required": false, "schema": { "type": "string" } },
+          { "in": "query", "name": "wkn", "required": false, "schema": { "type": "string" } },
+          { "in": "query", "name": "isin", "required": false, "schema": { "type": "string" } },
+          { "in": "query", "name": "tradingVenueId", "required": false, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderCollection" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" }
+        },
+        "summary": "Returns a collection of Orders. Filter parameters are optional and can be combined.",
+        "tags": ["order-sandbox-controller"]
+      }
+    },
+    "/v1/orders/{no}": {
+      "get": {
+        "operationId": "getOrder",
+        "parameters": [{ "in": "path", "name": "no", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "content": { "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Order" } } },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "tags": ["order-sandbox-controller"]
+      }
+    },
+    "/v1/orders/{no}/cancel": {
+      "post": {
+        "description": "Cancels an Order at a TradingVenue. Returns a reference to an OrderTransactionState.",
+        "operationId": "cancelOrder",
+        "parameters": [
+          {
+            "description": "Order number. Regex: [0-9]{1,18}",
+            "example": 117011929,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Order already cancelled" }
+        },
+        "summary": "Cancel Order",
+        "tags": ["order-sandbox-controller"]
+      }
+    },
+    "/v1/orders/{no}/change": {
+      "post": {
+        "description": "Create an OrderChange. Does not change it at a TradingVenue. Returns a reference to an OrderChange object.",
+        "operationId": "createOrderChange",
+        "parameters": [{ "in": "path", "name": "no", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderChange" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/OrderChange" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Create OrderChange from Order",
+        "tags": ["order-sandbox-controller"]
+      }
+    },
+    "/v1/quote-order-entries": {
+      "post": {
+        "description": "Creates a QuoteOrderEntry. Requests a quote at a TradingVenue that is not accepted yet.",
+        "operationId": "createQuoteOrderEntry",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QuoteOrderEntry" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/QuoteOrderEntry" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Input invalid" },
+          "409": { "description": "Quote order offer cannot be provided" }
+        },
+        "summary": "Create QuoteOrderEntry",
+        "tags": ["QuoteOrderEntry"]
+      }
+    },
+    "/v1/quote-order-entries/{no}": {
+      "get": {
+        "description": "Returns a QuoteOrderEntry which contains the Quote of the specified TradingVenue.",
+        "operationId": "getQuoteOrderEntry",
+        "parameters": [
+          {
+            "description": "QuoteOrderEntry number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QuoteOrderEntryOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select QuoteOrderEntry",
+        "tags": ["QuoteOrderEntry"]
+      },
+      "put": {
+        "description": "Updates the attributes of an QuoteOrderEntry. Does not place it at a TradingVenue. Returns the updated QuoteOrderEntry which contains the Quote of the specified TradingVenue.",
+        "operationId": "putQuoteOrderEntry",
+        "parameters": [
+          {
+            "description": "QuoteOrderEntry number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QuoteOrderEntry" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/QuoteOrderEntry" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QuoteOrderEntryOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Update QuoteOrderEntry",
+        "tags": ["QuoteOrderEntry"]
+      }
+    },
+    "/v1/quote-order-entries/{no}/accept": {
+      "post": {
+        "description": "Accepts a QuoteOrderEntry at a TradingVenue. Returns a reference to an OrderTransactionState.",
+        "operationId": "acceptQuoteOrderEntry",
+        "parameters": [
+          {
+            "description": "QuoteOrderEntry number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Accept QuoteOrderEntry",
+        "tags": ["QuoteOrderEntry"]
+      }
+    },
+    "/v1/securities-accounts": {
+      "get": {
+        "description": "Returns a collection of SecuritiesAccounts.",
+        "operationId": "getSecuritiesAccount",
+        "parameters": [
+          {
+            "description": "Filter by account number",
+            "in": "query",
+            "name": "no",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Filter by account owner",
+            "in": "query",
+            "name": "owner",
+            "required": false,
+            "schema": { "maxLength": 200, "minLength": 1, "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/SecuritiesAccounts" } } },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/SecuritiesAccounts" } } },
+            "description": "Input invalid"
+          }
+        },
+        "summary": "Select all SecuritiesAccounts",
+        "tags": ["SecuritiesAccount"]
+      }
+    },
+    "/v1/securities-accounts/{no}": {
+      "get": {
+        "description": "Returns a SecuritiesAccount.",
+        "operationId": "getSecuritiesAccount_1",
+        "parameters": [
+          {
+            "description": "Securities account number",
+            "example": 928389669,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/SecuritiesAccount" } } },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/SecuritiesAccount" } } },
+            "description": "Input invalid"
+          },
+          "404": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/SecuritiesAccount" } } },
+            "description": "Resource not found"
+          }
+        },
+        "summary": "Select SecuritiesAccount",
+        "tags": ["SecuritiesAccount"]
+      }
+    },
+    "/v1/securities-accounts/{no}/accounts": {
+      "get": {
+        "description": "Returns a collection of ClearingAccounts for a SecuritiesAccount.",
+        "operationId": "getAccounts",
+        "parameters": [
+          {
+            "description": "Securities account number",
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/Accounts" } } },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/Accounts" } } },
+            "description": "Invalid input"
+          },
+          "404": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/Accounts" } } },
+            "description": "Resource not found"
+          }
+        },
+        "summary": "Select ClearingAccounts",
+        "tags": ["SecuritiesAccount"]
+      }
+    },
+    "/v1/securities-accounts/{no}/performance": {
+      "get": {
+        "description": "Returns the Performance of a SecuritiesAccount.",
+        "operationId": "getPerformance",
+        "parameters": [
+          {
+            "description": "Securities account number",
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json": { "schema": { "$ref": "#/components/schemas/SecuritesAccountPerformance" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": {
+              "application/hal+json": { "schema": { "$ref": "#/components/schemas/SecuritesAccountPerformance" } }
+            },
+            "description": "Input invalid"
+          },
+          "404": {
+            "content": {
+              "application/hal+json": { "schema": { "$ref": "#/components/schemas/SecuritesAccountPerformance" } }
+            },
+            "description": "Resource not found"
+          }
+        },
+        "summary": "Select Performance",
+        "tags": ["SecuritiesAccountPerformance"]
+      }
+    },
+    "/v1/securities-accounts/{no}/positions": {
+      "get": {
+        "description": "Returns a collection of Positions for a given SecuritiesAccount.",
+        "operationId": "getPositions",
+        "parameters": [
+          {
+            "description": "Securities account number",
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Wkn security number",
+            "in": "query",
+            "name": "wkn",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Size per page",
+            "in": "query",
+            "name": "perPage",
+            "required": false,
+            "schema": { "type": "string", "default": "15" }
+          },
+          {
+            "description": "Set current page",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": { "type": "string", "default": "1" }
+          },
+          {
+            "description": "Sort by property value",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": { "type": "array", "items": { "type": "string" } }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Positions" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Positions" } }
+            },
+            "description": "Input invalid"
+          },
+          "404": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Positions" } }
+            },
+            "description": "Resource not found"
+          }
+        },
+        "summary": "Select all Positions",
+        "tags": ["Position"]
+      }
+    },
+    "/v1/securities-accounts/{no}/positions-histories": {
+      "get": {
+        "description": "Returns a collection of PositionHistories for a SecuritiesAccount.",
+        "operationId": "getPositionsHistories",
+        "parameters": [
+          {
+            "description": "Securities account number",
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Wkn security number",
+            "in": "query",
+            "name": "wkn",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/PositionsHistories" } } },
+            "description": "Successful operation"
+          },
+          "400": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/PositionsHistories" } } },
+            "description": "Invalid input"
+          },
+          "404": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/PositionsHistories" } } },
+            "description": "Resource not found"
+          }
+        },
+        "summary": "Select all PositionHistories",
+        "tags": ["PositionHistories"]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Account": {
+        "title": "Collection of accounts",
+        "type": "object",
+        "properties": {
+          "currency": { "title": "Clearing account currency", "type": "string", "example": "EUR" },
+          "iban": { "title": "IBAN of account", "type": "string", "example": "DE15XXXXXX800XXXXXXXX7" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "no": { "title": "Clearing account number", "type": "string", "example": "123456789" },
+          "owner": { "title": "Clearing account owner", "type": "string", "example": "Mr. Example" },
+          "type": {
+            "title": "Clearing account type",
+            "type": "string",
+            "example": "Verrechnungskonto",
+            "enum": [
+              "CLEARING_ACCOUNT",
+              "CALL_MONEY",
+              "CALL_MONEY_DIRECT",
+              "FIXED_DEPOSIT",
+              "DEPOT",
+              "FOREIGN_CURRENCY_ACOUNT",
+              "CFD_MARGIN_ACCOUNT",
+              "CFD_DEMO_ACCOUNT",
+              "CFD_PLAY_ACCOUNT",
+              "EUREX_MARGIN_ACCOUNT",
+              "BATCH_PROCESS",
+              "GIRO_ACCOUNT",
+              "INCOME_PLAN",
+              "SAVINGS_BOND",
+              "PREMIUM_SAVINGS_PLAN",
+              "INTEREST_GROWTH_RATE",
+              "BASE_ACCOUNT"
+            ]
+          }
+        }
+      },
+      "Accounts": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Collection of accounts",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Account" }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "currency": { "type": "string" },
+          "fields": { "type": "array", "items": { "$ref": "#/components/schemas/CategoryField" } },
+          "label": { "type": "string" },
+          "name": { "type": "string" },
+          "totalSumAbsolute": { "type": "string" },
+          "totalSumRelative": { "type": "string" }
+        }
+      },
+      "CategoryField": {
+        "type": "object",
+        "properties": {
+          "currency": { "type": "string" },
+          "fieldId": { "type": "string" },
+          "isEstimated": { "type": "boolean" },
+          "label": { "type": "string" },
+          "typeLabel": { "type": "string" },
+          "valueAbsolute": { "type": "string" },
+          "valueRelative": { "type": "string" },
+          "valueText": { "type": "string" }
+        }
+      },
+      "Challenge": { "type": "object", "properties": { "code": { "type": "string" }, "type": { "type": "string" } } },
+      "Cost": {
+        "type": "object",
+        "properties": {
+          "categories": { "type": "array", "items": { "$ref": "#/components/schemas/Category" } },
+          "currency": { "type": "string" },
+          "exAnteCostId": { "type": "string" },
+          "footnote": { "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "remark": { "type": "string" }
+        }
+      },
+      "Execution": {
+        "type": "object",
+        "properties": {
+          "currency": { "type": "string" },
+          "executionAmount": { "type": "string" },
+          "executionPrice": { "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "valueDate": { "type": "string" }
+        }
+      },
+      "Link": {
+        "type": "object",
+        "properties": {
+          "deprecation": { "type": "string" },
+          "href": { "type": "string" },
+          "hreflang": { "type": "string" },
+          "media": { "type": "string" },
+          "name": { "type": "string" },
+          "profile": { "type": "string" },
+          "rel": { "type": "string" },
+          "title": { "type": "string" },
+          "type": { "type": "string" }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "accountNo": { "type": "string" },
+          "cancellationTimestamp": { "type": "string", "format": "date-time" },
+          "currency": { "type": "string" },
+          "direction": { "type": "string" },
+          "drippingQuantity": { "type": "string" },
+          "exAnteCostId": { "type": "string" },
+          "executionPrice": { "type": "string" },
+          "executions": { "type": "array", "items": { "$ref": "#/components/schemas/Execution" } },
+          "isin": { "type": "string" },
+          "limit": { "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "no": { "type": "integer", "format": "int64" },
+          "nominalAmount": { "type": "string" },
+          "orderSupplement": { "type": "string" },
+          "restriction": {
+            "type": "string",
+            "enum": [
+              "MARKET_ORDER",
+              "LIMIT_ORDER",
+              "STOP_BUY/LOSS_MARKET",
+              "STOP_BUY/LOSS_LIMIT",
+              "OCO_STOP_BUY/LOSS_MARKET",
+              "OCO_STOP_BUY/LOSS_LIMIT",
+              "TRAILING_STOP_BUY/LOSS_MARKET",
+              "TRAILING_STOP_BUY/LOSS_LIMIT"
+            ]
+          },
+          "securitiesAccountNo": { "type": "string" },
+          "securityName": { "type": "string" },
+          "state": {
+            "type": "string",
+            "enum": [
+              "ORDER_STATUS_OPEN",
+              "ORDER_STATUS_PARTIALLY_EXECUTED",
+              "ORDER_STATUS_EXECUTED",
+              "ORDER_STATUS_CANCELED",
+              "ORDER_STATUS_CANCELED_FORCED",
+              "ORDER_STATUS_CANCELED_REQUESTED",
+              "ORDER_STATUS_CANCELED_TIMEOUT",
+              "CANCEL_PENDING",
+              "STORNO",
+              "ERROR",
+              "PARTIALLY_EXECUTED_CANCEL",
+              "INACTIVE",
+              "NOT AVAILABLE"
+            ]
+          },
+          "stop": { "type": "string" },
+          "stopLimit": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "tradingVenueId": { "type": "string" },
+          "tradingVenueName": { "type": "string" },
+          "trailingDistance": { "type": "string" },
+          "trailingLimitTolerance": { "type": "string" },
+          "trailingNotation": { "type": "string" },
+          "validityDate": { "type": "string" },
+          "wkn": { "type": "string" }
+        }
+      },
+      "OrderChange": {
+        "required": ["securitiesAccountNo"],
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Order account number", "type": "string" },
+          "drippingQuantity": {
+            "title": "Quantity of an iceberg order. Only useful for iceberg orders",
+            "type": "string"
+          },
+          "limit": { "title": "Price limit of OrderChange", "type": "string" },
+          "orderSupplement": {
+            "title": "Additional property of order. Can be the following values: NORMAL, ICEBERG, IMMEDIATE_OR_CANCEL, FILL_OR_KILL",
+            "type": "string"
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "stop": { "title": "Stop trigger for stop orders and One Cancels the Other Orders", "type": "string" },
+          "stopLimit": {
+            "title": "Limit for Stop Buy/Loss Limit Orders and One Cancels the Other Stop Buy/Loss Limit Orders. Marks the market limit for an Order after a stop trigger has been fired",
+            "type": "string"
+          },
+          "trailingDistance": {
+            "title": "Marks the distance used to calculcate the current stop trigger of a trailing order",
+            "type": "string"
+          },
+          "trailingLimitTolerance": {
+            "title": "Necessary to calculate the limit after stop trigger in case of a Trailing Stop Limit order",
+            "type": "string"
+          },
+          "trailingNotation": {
+            "title": "Can be absolute or relative",
+            "pattern": "ABSOLUTE|RELATIVE",
+            "type": "string"
+          },
+          "validityDate": { "title": "Validity date (YYYY-MM-DD)", "type": "string" }
+        }
+      },
+      "OrderChangeOut": {
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "OrderChange account number", "type": "string" },
+          "drippingQuantity": {
+            "title": "Quantity of an iceberg order. Only useful for iceberg orders",
+            "type": "string"
+          },
+          "entityState": {
+            "title": "EntityState of the Order. Displays whether or not the order has been placed",
+            "type": "string",
+            "enum": ["UNREADY", "READY_FOR_PLACING", "PLACED"]
+          },
+          "exAnteCostId": { "title": "ExAnteCost ID", "type": "string" },
+          "limit": { "title": "Price limit of OrderChange", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "no": { "title": "OrderChange number", "type": "string" },
+          "orderSupplement": {
+            "title": "Additional property of order. Can be the following values: NORMAL, ICEBERG, IMMEDIATE_OR_CANCEL, FILL_OR_KILL",
+            "type": "string"
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "stop": { "title": "Stop trigger for stop orders and One Cancels the Other Orders", "type": "string" },
+          "stopLimit": {
+            "title": "Limit for Stop Buy/Loss Limit Orders and One Cancels the Other Stop Buy/Loss Limit Orders. Marks the market limit for an Order after a stop trigger has been fired",
+            "type": "string"
+          },
+          "trailingDistance": {
+            "title": "Marks the distance used to calculcate the current stop trigger of a trailing order",
+            "type": "string"
+          },
+          "trailingLimitTolerance": {
+            "title": "Necessary to calculate the limit after stop trigger in case of a Trailing Stop Limit order",
+            "type": "string"
+          },
+          "trailingNotation": { "title": "Can be \"absolute\" or \"relative\"", "type": "string" },
+          "validityDate": { "title": "Validity date (YYYY-MM-DD)", "type": "string" }
+        }
+      },
+      "OrderCollection": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/Order" } },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } }
+        }
+      },
+      "OrderEntry": {
+        "required": ["accountNo", "direction", "nominalAmount", "securitiesAccountNo", "tradingVenueId"],
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Order account number", "type": "string" },
+          "direction": {
+            "title": "Order type. Classifies which action is performed for Order",
+            "pattern": "BUY|SELL",
+            "type": "string"
+          },
+          "drippingQuantity": {
+            "title": "Quantity of an iceberg order. Only useful for iceberg orders",
+            "type": "string"
+          },
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "limit": { "title": "Price limit of OrderEntry", "type": "string" },
+          "marketPlaceId": { "title": "Market place ID", "type": "string" },
+          "nominalAmount": { "title": "Amount of Securities", "type": "string" },
+          "orderSupplement": {
+            "title": "Additional property of order. Can be the following values: NORMAL, ICEBERG, IMMEDIATE_OR_CANCEL, FILL_OR_KILL",
+            "type": "string"
+          },
+          "overrideRiskClass": {
+            "title": "Flag indicating whether to override a warning from the risk class validation",
+            "pattern": "^(true|false)$",
+            "type": "string"
+          },
+          "positionId": { "title": "Position ID", "pattern": "^[a-zA-Z0-9]{1,39}$", "type": "string" },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "stop": { "title": "Stop trigger for stop orders and One Cancels the Other Orders", "type": "string" },
+          "stopLimit": {
+            "title": "Limit for Stop Buy/Loss Limit Orders and One Cancels the Other Stop Buy/Loss Limit Orders. Marks the market limit for an Order after a stop trigger has been fired",
+            "type": "string"
+          },
+          "tradingVenueId": { "title": "TradingVenue ID", "type": "string" },
+          "trailingDistance": {
+            "title": "Marks the distance used to calculcate the current stop trigger of a trailing order",
+            "type": "string"
+          },
+          "trailingLimitTolerance": {
+            "title": "Necessary to calculate the limit after stop trigger in case of a Trailing Stop Limit Order",
+            "type": "string"
+          },
+          "trailingNotation": {
+            "title": "Can be absolute or relative",
+            "pattern": "ABSOLUTE|RELATIVE",
+            "type": "string"
+          },
+          "validityDate": { "title": "Validity date (YYYY-MM-DD)", "type": "string" },
+          "wkn": { "title": "WKN", "type": "string", "example": "7100000" }
+        }
+      },
+      "OrderEntryOut": {
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "direction": { "title": "Direction can be BUY or SELL", "type": "string" },
+          "drippingQuantity": {
+            "title": "Quantity of an iceberg order. Only useful for iceberg orders",
+            "type": "string"
+          },
+          "entityState": {
+            "title": "EntityState of the Order. Displays whether or not the order has been placed",
+            "type": "string",
+            "enum": ["UNREADY", "READY_FOR_PLACING", "PLACED"]
+          },
+          "exAnteCostId": { "title": "ExAnteCost ID", "type": "string" },
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "limit": { "title": "Price limit of OrderEntry", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "marketPlaceId": { "title": "Market place ID", "type": "string" },
+          "no": { "title": "OrderEntry number", "type": "string" },
+          "nominalAmount": { "title": "Amount of Securities", "type": "string" },
+          "orderSupplement": {
+            "title": "Additional property of order. Can be the following values: NORMAL, ICEBERG, IMMEDIATE_OR_CANCEL, FILL_OR_KILL",
+            "type": "string"
+          },
+          "overrideRiskClass": {
+            "title": "Flag indicating whether to override a warning from the risk class validation",
+            "type": "string"
+          },
+          "positionId": { "title": "Position ID", "type": "string" },
+          "secondsUntilExpiration": {
+            "title": "Time to live in seconds for the OrderEntry",
+            "type": "integer",
+            "format": "int64"
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "stop": { "title": "Stop trigger for stop orders and One Cancels the Other Orders", "type": "string" },
+          "stopLimit": {
+            "title": "Limit for Stop Buy/Loss Limit Orders and One Cancels the Other Stop Buy/Loss Limit Orders. Marks the market limit for an Order after a stop trigger has been fired",
+            "type": "string"
+          },
+          "tradingVenueId": { "title": "TradingVenue ID", "type": "string" },
+          "trailingDistance": {
+            "title": "Marks the distance used to calculcate the current stop trigger of a trailing Order",
+            "type": "string"
+          },
+          "trailingLimitTolerance": {
+            "title": "Necessary to calculate the limit after stop trigger in case of a Trailing Stop Limit Order",
+            "type": "string"
+          },
+          "trailingNotation": { "title": "Can be absolute or relative", "type": "string" },
+          "validityDate": { "title": "Validity date (YYYY-MM-DD)", "type": "string" },
+          "wkn": { "title": "WKN", "type": "string", "example": "7100000" }
+        }
+      },
+      "OrderTransaction": {
+        "type": "object",
+        "properties": {
+          "id": { "title": "OrderTransaction ID", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "orderNo": { "title": "OrderTransaction number", "type": "integer", "format": "int64" },
+          "state": {
+            "title": "Transaction state",
+            "type": "string",
+            "enum": [
+              "NEW",
+              "AUTHORIZATION_PENDING",
+              "AUTHORIZATION_ACCEPTED",
+              "AUTHORIZATION_ERROR",
+              "AUTHORIZATION_REJECTED",
+              "AUTHORIZATION_USER_OFFLINE",
+              "AUTHORIZATION_USER_TIMEOUT",
+              "AUTHORIZATION_ACCEPTED_DONE",
+              "EXECUTING",
+              "EXECUTION_SUCCESSFUL",
+              "EXECUTION_FAILED",
+              "EXECUTION_TIMED_OUT"
+            ]
+          }
+        }
+      },
+      "Paging": {
+        "title": "Pages",
+        "type": "object",
+        "properties": {
+          "page": { "title": "current page", "type": "integer", "format": "int32" },
+          "perPage": { "title": "max count of visible items per page", "type": "integer", "format": "int32" },
+          "totalItems": { "title": "max count of items absolute", "type": "integer", "format": "int32" },
+          "totalPage": { "title": "max count of calculated pages", "type": "integer", "format": "int32" }
+        }
+      },
+      "Position": {
+        "title": "List of positions",
+        "type": "object",
+        "properties": {
+          "assetClass": {
+            "title": "Asset class of security",
+            "type": "string",
+            "example": "STOCK",
+            "enum": [
+              "STOCK",
+              "BOND",
+              "WARRANT",
+              "CERTIFICATE",
+              "FUND",
+              "HEDGE_FUND",
+              "FUNDS",
+              "TRACKERS_FRANCE",
+              "ETF_EXCHANGE_TRADED_FUNDS",
+              "PRECIOUS_METAL",
+              "ANY_OTHER",
+              "PARTICIPATION_CERTIFICATE",
+              "PARTICIPATION_CERTIFICATE_WITH_STOCK_CHARACTER",
+              "PARTICIPATION_CERTIFICATE_WITH_PENSION_CHARACTER"
+            ]
+          },
+          "currency": { "title": "Currency of Position", "type": "string", "example": "EUR" },
+          "custodianCountry": {
+            "title": "Description of custodian country",
+            "type": "string",
+            "example": "Deutschland"
+          },
+          "id": { "title": "Id of the actual position", "type": "string" },
+          "initialPrice": { "title": "Initial price", "type": "string" },
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "lockState": {
+            "title": "The current lock state of the position",
+            "type": "string",
+            "enum": [
+              "NO_LOCK",
+              "NO_MORTGAGE",
+              "LOCK_FOR_CREDIT",
+              "LOCK_PLEDGE_IN_FAVOR_OF_THIRD_PARTIES",
+              "LOCK_BECAUSE_OF_SEIZURE",
+              "LOCK_ON_CUSTOMER_DEMAND",
+              "WORKFORCE_LOCK_WR_SAFE",
+              "LOCK_DUE_TO_CLEARING",
+              "RESTRICTED_CA",
+              "WORTHLESS_ASSET",
+              "WORKFORCE_LOCK_COMPANY",
+              "WORKFORCE_LOCK_COMPANY_VL",
+              "LOCK_EMPLOYEE_SHARE",
+              "LOCK_NOT_FOR_SALE",
+              "LOCK_VV",
+              "LOCK_DELIVERY_SAFE",
+              "TAX_CORRECTION",
+              "LOCK_EUREX_OPTION",
+              "LOCK_CORPORATE_ACTION",
+              "LOCK_EXCHANGE_SAFE",
+              "LOCK_SECURITIES_LENDING",
+              "LOCK_TERMINATED_POSITION",
+              "LOCK_EXCHANGE_VA_CS",
+              "INCOMPLETE_LOCK",
+              "LOCK_UNKNOWN_RECIPIENT_CS",
+              "LOCK_AMOUNT_NOT",
+              "LOCK_TERMINATE_DELIVERY_SAFE",
+              "UNKNOWN"
+            ]
+          },
+          "nominalAmount": { "title": "Nominal amount of security", "type": "string" },
+          "profitLossAbsolut": { "title": "Absolute profit or loss of actual position", "type": "string" },
+          "profitLossPercent": { "title": "Profit or loss of actual position in percent", "type": "string" },
+          "securitiesAccountNo": { "type": "string", "writeOnly": true },
+          "securityName": { "title": "Name of security", "type": "string", "example": "DAIMLER AG" },
+          "value": { "title": "Value of equity", "type": "string", "example": "33.35" },
+          "wkn": { "title": "WKN", "type": "string", "example": "710000" }
+        }
+      },
+      "PositionHistory": {
+        "title": "Collection of PositionHistory items",
+        "type": "object",
+        "properties": {
+          "direction": { "title": "Direction can be BUY or SELL", "type": "string" },
+          "entryDescription": { "title": "Entry description of entry", "type": "string", "example": "KAUF" },
+          "initialPrice": { "title": "Initial price", "type": "string", "example": "0,181609" },
+          "initialValue": { "title": "Initial value", "type": "string", "example": "998,85" },
+          "isin": { "title": "ISIN", "type": "string", "example": "NL0011375019" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "nominalAmount": { "title": "Nominal amount of execution", "type": "string", "example": "5.500,00" },
+          "price": { "title": "Price", "type": "string", "example": "0,0899" },
+          "profitLossAbsolut": { "title": "Profit / loss absolut", "type": "string", "example": "-504,40" },
+          "purchaseDate": { "title": "Purchase date", "type": "string", "format": "date", "example": "2016-12-14" },
+          "securitiesAccountNo": { "type": "string", "writeOnly": true },
+          "securityName": { "title": "Name of Security", "type": "string", "example": "STEINHOFF INT.HLDG.EO-,50" },
+          "wkn": { "title": "WKN", "type": "string", "example": "71000" }
+        }
+      },
+      "Positions": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "List of positions",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Position" }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "paging": { "$ref": "#/components/schemas/Paging" }
+        }
+      },
+      "PositionsHistories": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Collection of PositionHistory items",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/PositionHistory" }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } }
+        }
+      },
+      "Quote": {
+        "title": "Quote object",
+        "type": "object",
+        "properties": {
+          "buyQuotation": { "title": "Quote at which a customer can buy", "type": "string" },
+          "currency": { "title": "Currency", "type": "string", "example": "EUR" },
+          "maxBuyAmount": { "title": "Maximum Quote purchase amount", "type": "string" },
+          "maxSellAmount": { "title": "Maximum Quote sale amount", "type": "string" },
+          "quoteTimestamp": { "title": "Timestamp of Quote", "type": "string", "format": "date-time" },
+          "sellQuotation": { "title": "Quote at which a customer can sell", "type": "string" }
+        }
+      },
+      "QuoteOrderEntry": {
+        "required": [
+          "accountNo",
+          "direction",
+          "marketPlaceId",
+          "nominalAmount",
+          "securitiesAccountNo",
+          "tradingVenueId"
+        ],
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Order account number", "type": "string" },
+          "direction": { "pattern": "BUY|SELL", "type": "string" },
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "limit": { "title": "Price limit of QuoteOrderEntry", "type": "string" },
+          "marketPlaceId": { "title": "Market place ID", "type": "string" },
+          "nominalAmount": { "title": "Amount of Securities", "type": "string" },
+          "overrideRiskClass": {
+            "title": "Flag indicating whether to override a warning from the risk class validation",
+            "pattern": "^(true|false)$",
+            "type": "string"
+          },
+          "positionId": { "title": "Position ID", "pattern": "^[a-zA-Z0-9]{1,39}$", "type": "string" },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "tradingVenueId": { "title": "TradingVenue ID", "type": "string" },
+          "wkn": { "title": "WKN", "type": "string", "example": "7100000" }
+        }
+      },
+      "QuoteOrderEntryOut": {
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "direction": { "title": "Direction can be BUY or SELL", "type": "string" },
+          "entityState": {
+            "title": "Displays whether or not the Order has been placed",
+            "type": "string",
+            "enum": ["UNREADY", "READY_FOR_PLACING", "PLACED"]
+          },
+          "exAnteCostId": { "title": "ExAnteCost ID", "type": "string" },
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "limit": { "title": "Price limit of QuoteOrderEntry", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "marketMakerId": { "title": "Market maker ID", "type": "string" },
+          "marketPlaceId": { "title": "MarketPlace ID", "type": "string" },
+          "marketPlaceOrderNo": { "title": "TradingVenue order number", "type": "string" },
+          "no": { "title": "QuoteOrderEntry number", "type": "string" },
+          "nominalAmount": { "title": "Amount of Securities", "type": "string" },
+          "orderNo": {
+            "title": "OrderEntry number. Returned only after QuoteOrderEntry is placed",
+            "type": "integer",
+            "format": "int64"
+          },
+          "overrideRiskClass": {
+            "title": "Flag indicating whether to override a warning from the risk class validation",
+            "type": "string"
+          },
+          "positionId": { "title": "Position ID", "type": "string" },
+          "quote": { "$ref": "#/components/schemas/Quote" },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "securityName": { "title": "Name of security", "type": "string", "example": "DAIMLER AG" },
+          "timestamp": { "title": "QuoteOrderEntry timestamp", "type": "string", "format": "date-time" },
+          "tradingVenueId": { "title": "TradingVenue ID", "type": "string" },
+          "wkn": { "title": "WKN", "type": "string", "example": "7100000" }
+        }
+      },
+      "SecuritesAccountPerformance": {
+        "type": "object",
+        "properties": {
+          "balance": { "title": "Total portfolio value", "type": "string", "example": "53.41" },
+          "balanceMetal": { "title": "Total deposit of precious metals", "type": "string", "example": "0.0" },
+          "balanceStock": { "title": "Total deposit Securities", "type": "string", "example": "53.41" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "no": { "type": "string", "writeOnly": true },
+          "sumProfitLoss": { "title": "Total absolute performance", "type": "string", "example": "-31.75" },
+          "sumProfitLossPercent": { "title": "Total performance in percentage", "type": "string", "example": "-37.28" }
+        }
+      },
+      "SecuritiesAccount": {
+        "title": "Collection of SecuritiesAccounts",
+        "type": "object",
+        "properties": {
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "no": { "title": "Securities account number", "type": "string", "example": "123456789" },
+          "owner": { "title": "Account owner", "type": "string", "example": "Mr Example" }
+        }
+      },
+      "SecuritiesAccounts": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Collection of SecuritiesAccounts",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SecuritiesAccount" }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } }
+        }
+      }
+    },
+    "securitySchemes": { "bearerAuth": { "bearerFormat": "JWT", "scheme": "bearer", "type": "http" } }
+  },
+  "x-readme": { "explorer-enabled": false, "proxy-enabled": true, "samples-enabled": true }
+}

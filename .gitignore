@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+
+# Java / Maven
+target/
+out/
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+replay_pid*
+
+# Logs
+*.log
+logs/
+
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+
+# IDEs and editors
+.idea/
+.vscode/
+*.iml
+
+# Cursor / local agent artifacts
+.cursor/
+
+# Build tool cache
+.mvn/timing.properties

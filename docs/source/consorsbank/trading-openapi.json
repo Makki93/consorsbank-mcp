@@ -1,0 +1,3292 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "contact": { "name": "api-support@consorsbank.de" },
+    "description": "This is the Consorsbank API description in the area of api management. The description will cover the domain savings-plan incl. their management.\nPerforming requests require Authorization Header with Bearer JWT Token.",
+    "license": { "name": "License text", "url": "http://unlicense.org" },
+    "title": "Consorsbank Investment - savings-plan",
+    "version": "\"\""
+  },
+  "servers": [{ "url": "api.consorsbank.de", "description": "Generated server url" }],
+  "security": [{ "bearerAuth": [] }],
+  "paths": {
+    "/v1/ex-ante-costs/{id}": {
+      "get": {
+        "description": "Returns an ExAnteCost.",
+        "operationId": "getCost",
+        "parameters": [
+          {
+            "description": "ExAnteCost id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": { "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Cost" } } },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select ExAnteCost",
+        "tags": ["ExAnteCost"]
+      }
+    },
+    "/v1/order-changes/{no}": {
+      "get": {
+        "description": "Returns an OrderChange.",
+        "operationId": "getOrderChange",
+        "parameters": [
+          {
+            "description": "OrderChange number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderChangeOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select OrderChange",
+        "tags": ["OrderChange"]
+      },
+      "put": {
+        "description": "Updates the attributes of an OrderChange. Does not place it at a TradingVenue. Returns the updated OrderChange.",
+        "operationId": "updateOrderChange",
+        "parameters": [
+          {
+            "description": "OrderChange number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderChangeIn" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/OrderChangeIn" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderChangeOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Update OrderChange",
+        "tags": ["OrderChange"]
+      }
+    },
+    "/v1/order-changes/{no}/place": {
+      "post": {
+        "description": "Places an OrderChange at a TradingVenue. Returns a reference to an OrderTransactionState.",
+        "operationId": "placeOrderChange",
+        "parameters": [
+          {
+            "description": "OrderChange number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Place OrderChange",
+        "tags": ["OrderChange"]
+      }
+    },
+    "/v1/order-entries": {
+      "post": {
+        "description": "Creates an OrderEntry. Does not place it at a TradingVenue. Returns a reference to the new object.",
+        "operationId": "createOrderEntry",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderEntryIn" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/OrderEntryIn" } }
+          },
+          "required": true
+        },
+        "responses": { "201": { "description": "Created" }, "400": { "description": "Input invalid" } },
+        "summary": "Create OrderEntry",
+        "tags": ["OrderEntry"]
+      }
+    },
+    "/v1/order-entries/{no}": {
+      "get": {
+        "description": "Returns an OrderEntry.",
+        "operationId": "getOrderEntry",
+        "parameters": [
+          {
+            "description": "OrderEntry number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderEntryOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource is not found" }
+        },
+        "summary": "Select OrderEntry",
+        "tags": ["OrderEntry"]
+      },
+      "put": {
+        "description": "Updates the attributes of an OrderEntry. Does not place it at a TradingVenue. Returns the updated OrderEntry.",
+        "operationId": "updateOrderEntry",
+        "parameters": [
+          {
+            "description": "OrderEntry number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderEntryIn" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/OrderEntryIn" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderEntryOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Update OrderEntry",
+        "tags": ["OrderEntry"]
+      }
+    },
+    "/v1/order-entries/{no}/place": {
+      "post": {
+        "description": "Places an OrderEntry at a TradingVenue. Returns a reference to an OrderTransactionState.",
+        "operationId": "placeOrderEntry",
+        "parameters": [
+          {
+            "description": "OrderChange number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Place OrderEntry",
+        "tags": ["OrderEntry"]
+      }
+    },
+    "/v1/order-transaction-states/{id}": {
+      "get": {
+        "description": "Returns an OrderTransactionState.",
+        "operationId": "getOrderTransactionState",
+        "parameters": [
+          {
+            "description": "OrderTransactionState id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "$ref": "#/components/schemas/OrderTransactionState" }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "303": { "description": "Successful operation - resource updated" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select OrderTransactionState",
+        "tags": ["OrderTransactionState"]
+      }
+    },
+    "/v1/orders": {
+      "get": {
+        "description": "Returns a collection of Orders. Filter parameters are optional and can be combined.",
+        "operationId": "getOrders",
+        "parameters": [
+          {
+            "description": "Filter by Order number",
+            "in": "query",
+            "name": "no",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Filter by Securities account number",
+            "in": "query",
+            "name": "securitiesAccountNo",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Filter by WKN",
+            "in": "query",
+            "name": "wkn",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Filter by ISIN",
+            "in": "query",
+            "name": "isin",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Filter by TradingVenue id",
+            "in": "query",
+            "name": "tradingVenueId",
+            "required": false,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderCollection" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" }
+        },
+        "summary": "Select all Orders",
+        "tags": ["Order"]
+      }
+    },
+    "/v1/orders/{no}": {
+      "get": {
+        "description": "Returns an Order.",
+        "operationId": "getOrder",
+        "parameters": [
+          {
+            "description": "Order number. Regex: [0-9]{1,18}",
+            "example": 117011929,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": { "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Order" } } },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select Order",
+        "tags": ["Order"]
+      }
+    },
+    "/v1/orders/{no}/cancel": {
+      "post": {
+        "description": "Cancels an Order at a TradingVenue. Returns a reference to an OrderTransactionState.",
+        "operationId": "cancelOrder",
+        "parameters": [
+          {
+            "description": "Order number. Regex: [0-9]{1,18}",
+            "example": 117011929,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Order already cancelled" }
+        },
+        "summary": "Cancel Order",
+        "tags": ["Order"]
+      }
+    },
+    "/v1/orders/{no}/change": {
+      "post": {
+        "description": "Create an OrderChange. Does not change it at a TradingVenue. Returns a reference to an OrderChange object.",
+        "operationId": "createOrderChange",
+        "parameters": [{ "in": "path", "name": "no", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/OrderChangeIn" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/OrderChangeIn" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Create OrderChange from Order",
+        "tags": ["Order"]
+      }
+    },
+    "/v1/quote-order-entries": {
+      "post": {
+        "description": "Creates a QuoteOrderEntry. Requests a quote at a TradingVenue that is not accepted yet.",
+        "operationId": "createQuoteOrderEntry",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QuoteOrderEntryIn" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/QuoteOrderEntryIn" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Input invalid" },
+          "409": { "description": "Quote order offer cannot be provided" }
+        },
+        "summary": "Create QuoteOrderEntry",
+        "tags": ["QuoteOrderEntry"]
+      }
+    },
+    "/v1/quote-order-entries/{no}": {
+      "get": {
+        "description": "Returns a QuoteOrderEntry which contains the Quote of the specified TradingVenue.",
+        "operationId": "getQuoteOrderEntry",
+        "parameters": [
+          {
+            "description": "OrderChange number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QuoteOrderEntryOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select QuoteOrderEntry",
+        "tags": ["QuoteOrderEntry"]
+      },
+      "put": {
+        "description": "Updates the attributes of an QuoteOrderEntry. Does not place it at a TradingVenue. Returns the updated QuoteOrderEntry which contains the Quote of the specified TradingVenue.",
+        "operationId": "putQuoteOrderEntry",
+        "parameters": [
+          {
+            "description": "QuoteOrderEntry number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QuoteOrderEntryIn" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/QuoteOrderEntryIn" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QuoteOrderEntryOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Quote order entry cannot be updated" }
+        },
+        "summary": "Update QuoteOrderEntry",
+        "tags": ["QuoteOrderEntry"]
+      }
+    },
+    "/v1/quote-order-entries/{no}/accept": {
+      "post": {
+        "description": "Accepts a QuoteOrderEntry at a TradingVenue. Returns a reference to an OrderTransactionState.",
+        "operationId": "acceptQuoteOrderEntry",
+        "parameters": [
+          {
+            "description": "QuoteOrderEntry number",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Accept QuoteOrderEntry",
+        "tags": ["QuoteOrderEntry"]
+      }
+    },
+    "/v1/quotes": {
+      "post": {
+        "description": "Requests a quote at a TradingVenue that is not accepted yet.",
+        "operationId": "getQuote",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QuoteIn" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/QuoteIn" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": { "description": "Success" },
+          "400": { "description": "Input invalid" },
+          "409": { "description": "Quote order offer cannot be provided" }
+        },
+        "summary": "Get Quote",
+        "tags": ["Quote"]
+      }
+    },
+    "/v1/profile-transaction-states/{id}": {
+      "get": {
+        "description": "Returns a ProfileTransactionState.",
+        "operationId": "getProfileTransactionState",
+        "parameters": [
+          {
+            "description": "ProfileTransactionState ID",
+            "example": "5e08572b-434b-4aae-a8a5-e619ef5d4aca",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "$ref": "#/components/schemas/ProfileTransactionStateOut" }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "303": { "description": "Successful operation - resource updated" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select ProfileTransactionState",
+        "tags": ["ProfileTransactionState"]
+      }
+    },
+    "/v1/profile/authentication-data": {
+      "get": {
+        "description": "Returns the AuthenticationData.",
+        "operationId": "getAuthenticationData",
+        "responses": {
+          "200": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/AuthenticationData" } } },
+            "description": "Successful operation"
+          }
+        },
+        "summary": "Select AuthenticationData",
+        "tags": ["AuthenticationData"]
+      }
+    },
+    "/v1/profile/session-level": {
+      "get": {
+        "description": "Returns the current authentication trust level of your session",
+        "operationId": "getSessionLevel",
+        "responses": {
+          "200": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/SessionLevelOut" } } },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" }
+        },
+        "summary": "Get Session Trust Level",
+        "tags": ["AuthenticationLevel"]
+      }
+    },
+    "/v1/profile/session-level-elevate": {
+      "post": {
+        "description": "Elevate Authentication Level to authLevel 2",
+        "operationId": "sessionLevelElevate",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": { "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Link" } } },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" }
+        },
+        "summary": "Elevate Authentication Level",
+        "tags": ["AuthenticationLevel"]
+      }
+    },
+    "/v1/profile/session-tan": {
+      "delete": {
+        "description": "Deactivates the SessionTan. Returns its current state.",
+        "operationId": "deactivateSessionTan",
+        "responses": {
+          "200": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/SessionTanStatus" } } },
+            "description": "Successful operation"
+          }
+        },
+        "summary": "Disable SessionTan",
+        "tags": ["SessionTan"]
+      },
+      "post": {
+        "description": "Activates the SessionTan. Returns its current state.",
+        "operationId": "activateSessionTan",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/SessionTanStatus" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" }
+        },
+        "summary": "Enable SessionTan",
+        "tags": ["SessionTan"]
+      }
+    },
+    "/v1/securities-accounts": {
+      "get": {
+        "description": "Returns a collection of SecuritiesAccounts.",
+        "operationId": "getSecuritiesAccount",
+        "parameters": [
+          {
+            "description": "Filter by account number",
+            "in": "query",
+            "name": "no",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Filter by account owner",
+            "in": "query",
+            "name": "owner",
+            "required": false,
+            "schema": { "maxLength": 200, "minLength": 1, "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json": { "schema": { "$ref": "#/components/schemas/SecuritiesAccountCollection" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" }
+        },
+        "summary": "Select all SecuritiesAccounts",
+        "tags": ["SecuritiesAccount"]
+      }
+    },
+    "/v1/securities-accounts/{no}": {
+      "get": {
+        "description": "Returns a SecuritiesAccount.",
+        "operationId": "getSecuritiesAccount_1",
+        "parameters": [
+          {
+            "description": "Securities account number",
+            "example": 928389669,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/SecuritiesAccount" } } },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select SecuritiesAccount",
+        "tags": ["SecuritiesAccount"]
+      }
+    },
+    "/v1/securities-accounts/{no}/accounts": {
+      "get": {
+        "description": "Returns a collection of ClearingAccounts for a SecuritiesAccount.",
+        "operationId": "getAccounts",
+        "parameters": [
+          {
+            "description": "Securities account number",
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/AccountCollection" } } },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Invalid input" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select ClearingAccounts",
+        "tags": ["SecuritiesAccount"]
+      }
+    },
+    "/v1/securities-accounts/{no}/performance": {
+      "get": {
+        "description": "Returns the Performance of a SecuritiesAccount.",
+        "operationId": "getPerformance",
+        "parameters": [
+          {
+            "description": "Securities account number",
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json": { "schema": { "$ref": "#/components/schemas/SecuritiesAccountPerformance" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select Performance",
+        "tags": ["SecuritiesAccount"]
+      }
+    },
+    "/v1/securities-accounts/{no}/positions": {
+      "get": {
+        "description": "Returns a collection of Positions for a given SecuritiesAccount.",
+        "operationId": "getPositions",
+        "parameters": [
+          {
+            "description": "Securities account number",
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Wkn security number",
+            "in": "query",
+            "name": "wkn",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Size per page",
+            "in": "query",
+            "name": "perPage",
+            "required": false,
+            "schema": { "type": "string", "default": "15" }
+          },
+          {
+            "description": "Set current page",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": { "type": "string", "default": "1" }
+          },
+          {
+            "description": "Sort by property value",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": { "type": "array", "items": { "type": "string" } }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": { "application/hal+json": { "schema": { "$ref": "#/components/schemas/PositionCollection" } } },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select all Positions",
+        "tags": ["SecuritiesAccount"]
+      }
+    },
+    "/v1/securities-accounts/{no}/positions-histories": {
+      "get": {
+        "description": "Returns a collection of PositionHistories for a SecuritiesAccount.",
+        "operationId": "getPositionsHistories",
+        "parameters": [
+          {
+            "description": "Securities account number",
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Wkn security number",
+            "in": "query",
+            "name": "wkn",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json": { "schema": { "$ref": "#/components/schemas/PositionHistoryCollection" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Invalid input" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select all PositionHistories",
+        "tags": ["SecuritiesAccount"]
+      }
+    },
+    "/v1/securities/{wkn}/tradingvenues": {
+      "get": {
+        "description": "Returns a collection of TradingVenues for a Security.",
+        "operationId": "getTradingVenueList",
+        "parameters": [
+          {
+            "description": "Security wkn",
+            "example": 710000,
+            "in": "path",
+            "name": "wkn",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "Filter by isQuoteBased",
+            "in": "query",
+            "name": "isQuoteBased",
+            "required": false,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json": { "schema": { "$ref": "#/components/schemas/TradingVenueCollection" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" }
+        },
+        "summary": "Select all TradingVenues",
+        "tags": ["TradingVenue"]
+      }
+    },
+    "/v1/savings-plan-transaction-states/{no}": {
+      "get": {
+        "description": "Returns a SavingsPlanTransactionState.",
+        "operationId": "getSavingsPlanTransactionState",
+        "parameters": [
+          {
+            "description": "SavingsPlanTransactionState ID",
+            "example": 13713,
+            "in": "path",
+            "name": "no",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "$ref": "#/components/schemas/SavingsPlanTransactionStateOut" }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "303": { "description": "Successful operation - resource updated" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select SavingsPlanTransactionState",
+        "tags": ["SavingsPlanTransactionState"]
+      }
+    },
+    "/v1/savings-plans": {
+      "get": {
+        "description": "Lists all SavingsPlans under a SecuritiesAccount.",
+        "operationId": "getAllSavingsPlans",
+        "parameters": [
+          {
+            "description": "The securities account number for which to get the savings plans",
+            "in": "query",
+            "name": "securitiesAccountNo",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/SavingsPlansOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Get all SavingsPlans",
+        "tags": ["SavingsPlan"]
+      }
+    },
+    "/v1/savings-plans-changes/{id}": {
+      "get": {
+        "description": "Returns a SavingsPlanChange.",
+        "operationId": "getSavingsPlanChange",
+        "parameters": [
+          {
+            "description": "SavingsPlanChange id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "$ref": "#/components/schemas/SavingsPlanChangeOut" }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource is not found" }
+        },
+        "summary": "Select a SavingsPlanChange",
+        "tags": ["SavingsPlanChange"]
+      },
+      "put": {
+        "description": "Updates the attributes of a SavingsPlanChange. Returns the updated SavingsPlanChange.",
+        "operationId": "updateSavingsPlanEntry_1",
+        "parameters": [
+          {
+            "description": "SavingsPlanEntry id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SavingsPlanChangeIn" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "$ref": "#/components/schemas/SavingsPlanChangeOut" }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Update SavingsPlanChange",
+        "tags": ["SavingsPlanChange"]
+      }
+    },
+    "/v1/savings-plans-changes/{id}/authorize": {
+      "post": {
+        "description": "Authorizes a SavingsPlanEntry. Returns a reference to an SavingsPlanTransactionState.",
+        "operationId": "authorizeSavingsPlanEntry_1",
+        "parameters": [
+          {
+            "description": "SavingsPlanEntry id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Authorizes SavingsPlanEntry",
+        "tags": ["SavingsPlanChange"]
+      }
+    },
+    "/v1/savings-plans-changes/{id}/challenge": {
+      "post": {
+        "description": "Returns a QrCodeOut.",
+        "operationId": "savingsPlanEntryChallenge_1",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QrCodeOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource is not found" }
+        },
+        "summary": "Obtain QR Code challenge for SavingsPlanChangeEntry",
+        "tags": ["SavingsPlanChange"]
+      }
+    },
+    "/v1/savings-plans-entries": {
+      "post": {
+        "description": "Creates a SavingsPlanEntry. Returns a reference to the new object.",
+        "operationId": "createSavingsPlanEntry",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/SavingsPlanEntryIn" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/SavingsPlanEntryIn" } }
+          },
+          "required": true
+        },
+        "responses": { "201": { "description": "Created" }, "400": { "description": "Input invalid" } },
+        "summary": "Create SavingsPlansEntry",
+        "tags": ["SavingsPlanEntry"]
+      }
+    },
+    "/v1/savings-plans-entries/{id}": {
+      "get": {
+        "description": "Returns a SavingsPlanEntry.",
+        "operationId": "getSavingsPlanEntry",
+        "parameters": [
+          {
+            "description": "SavingsPlanEntry id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/SavingsPlanEntryOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource is not found" }
+        },
+        "summary": "Select SavingsPlanEntry",
+        "tags": ["SavingsPlanEntry"]
+      },
+      "put": {
+        "description": "Updates the attributes of an SavingsPlanEntry. Returns the updated SavingsPlanEntry.",
+        "operationId": "updateSavingsPlanEntry",
+        "parameters": [
+          {
+            "description": "SavingsPlanEntry id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SavingsPlanEntryIn" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/SavingsPlanEntryOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Update SavingsPlanEntry",
+        "tags": ["SavingsPlanEntry"]
+      }
+    },
+    "/v1/savings-plans-entries/{id}/authorize": {
+      "post": {
+        "description": "Authorizes a SavingsPlanEntry. Returns a reference to an SavingsPlanTransactionState.",
+        "operationId": "authorizeSavingsPlanEntry",
+        "parameters": [
+          {
+            "description": "SavingsPlanEntry id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource is not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Authorizes SavingsPlanEntry",
+        "tags": ["SavingsPlanEntry"]
+      }
+    },
+    "/v1/savings-plans-entries/{id}/challenge": {
+      "post": {
+        "description": "Returns a QrCodeOut.",
+        "operationId": "savingsPlanEntryChallenge",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QrCodeOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource is not found" }
+        },
+        "summary": "Obtain QR Code challenge for SavingsPlanEntry",
+        "tags": ["SavingsPlanEntry"]
+      }
+    },
+    "/v1/savings-plans/change": {
+      "post": {
+        "description": "Change a SavingsPlan. Returns a reference to the new object.",
+        "operationId": "changeSavingsPlan",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/SavingsPlanChangeIn" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/SavingsPlanChangeIn" } }
+          },
+          "required": true
+        },
+        "responses": { "201": { "description": "Created" }, "400": { "description": "Input invalid" } },
+        "summary": "Change SavingsPlans",
+        "tags": ["SavingsPlan"]
+      }
+    },
+    "/v1/savings-plans/delete": {
+      "post": {
+        "description": "Delete a List of SavingsPlans.",
+        "operationId": "deleteSavingsPlan",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/SavingsPlanDeleteIn" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/SavingsPlanDeleteIn" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Delete SavingsPlans",
+        "tags": ["SavingsPlan"]
+      }
+    },
+    "/v1/savings-plans/delete/{id}": {
+      "get": {
+        "description": "Returns a SavingsPlanDelete",
+        "operationId": "getSavingsPlanDelete",
+        "parameters": [
+          {
+            "description": "SavingsPlanEntry id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "$ref": "#/components/schemas/SavingsPlanDeleteOut" }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select SavingsPlansDelete",
+        "tags": ["SavingsPlan"]
+      }
+    },
+    "/v1/savings-plans/one-time-payment-changes/{id}": {
+      "get": {
+        "description": "Returns a OneTimePaymentChange.",
+        "operationId": "getOneTimePaymentChange",
+        "parameters": [
+          {
+            "description": "OneTimePaymentChange id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "$ref": "#/components/schemas/OneTimePaymentChangeOut" }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource is not found" }
+        },
+        "summary": "Select a OneTimePaymentChange",
+        "tags": ["OneTimePaymentChange"]
+      },
+      "put": {
+        "description": "Updates the attributes of a OneTimePaymentChange. Returns the updated OneTimePaymentChange.",
+        "operationId": "updateSavingsPlanChange",
+        "parameters": [
+          {
+            "description": "OneTimePaymentChange id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OneTimePaymentChangeIn" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "$ref": "#/components/schemas/OneTimePaymentChangeOut" }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Update OneTimePaymentChange",
+        "tags": ["OneTimePaymentChange"]
+      }
+    },
+    "/v1/savings-plans/one-time-payment-changes/{id}/authorize": {
+      "post": {
+        "description": "Authorizes a OneTimePaymentChange. Returns a reference to an SavingsPlanTransactionState.",
+        "operationId": "authorizeSavingsPlanChange",
+        "parameters": [
+          {
+            "description": "OneTimePaymentChange id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Authorizes OneTimePaymentChange",
+        "tags": ["OneTimePaymentChange"]
+      }
+    },
+    "/v1/savings-plans/one-time-payment-changes/{id}/challenge": {
+      "post": {
+        "description": "Returns a QrCodeOut.",
+        "operationId": "oneTimePaymentChangeChallenge",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QrCodeOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource is not found" }
+        },
+        "summary": "Obtain QR Code challenge for OneTimePaymentChangeEntry",
+        "tags": ["OneTimePaymentChange"]
+      }
+    },
+    "/v1/savings-plans/one-time-payment-entries": {
+      "post": {
+        "description": "Creates a OneTimePaymentEntry. Returns a reference to the new object.",
+        "operationId": "createOneTimePaymentEntry",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": {
+              "schema": { "$ref": "#/components/schemas/OneTimePaymentEntryIn" }
+            },
+            "application/json": { "schema": { "$ref": "#/components/schemas/OneTimePaymentEntryIn" } }
+          },
+          "required": true
+        },
+        "responses": { "201": { "description": "Created" }, "400": { "description": "Input invalid" } },
+        "summary": "Create OneTimePaymentEntry",
+        "tags": ["OneTimePaymentEntry"]
+      }
+    },
+    "/v1/savings-plans/one-time-payment-entries/{id}": {
+      "get": {
+        "description": "Returns a OneTimePaymentEntry.",
+        "operationId": "getOneTimePaymentEntry",
+        "parameters": [
+          {
+            "description": "OneTimePaymentEntry id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "$ref": "#/components/schemas/OneTimePaymentEntryOut" }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource is not found" }
+        },
+        "summary": "Select OneTimePaymentEntry",
+        "tags": ["OneTimePaymentEntry"]
+      },
+      "put": {
+        "description": "Updates the attributes of an OneTimePaymentEntry. Returns the updated OneTimePaymentEntry.",
+        "operationId": "updateOneTimePaymentEntry",
+        "parameters": [
+          {
+            "description": "OneTimePaymentEntry id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OneTimePaymentEntryIn" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "$ref": "#/components/schemas/OneTimePaymentEntryOut" }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Update OneTimePaymentEntry",
+        "tags": ["OneTimePaymentEntry"]
+      }
+    },
+    "/v1/savings-plans/one-time-payment-entries/{id}/authorize": {
+      "post": {
+        "description": "Authorizes a OneTimePaymentEntry. Returns a reference to an SavingsPlanTransactionState.",
+        "operationId": "authorizeOneTimePaymentEntry",
+        "parameters": [
+          {
+            "description": "OneTimePaymentEntry id",
+            "example": 13713,
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/Challenge" } },
+            "application/json": { "schema": { "$ref": "#/components/schemas/Challenge" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource is not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Authorizes OneTimePaymentEntry",
+        "tags": ["OneTimePaymentEntry"]
+      }
+    },
+    "/v1/savings-plans/one-time-payment-entries/{id}/challenge": {
+      "post": {
+        "description": "Returns a QrCodeOut.",
+        "operationId": "oneTimePaymentEntryChallenge",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/QrCodeOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource is not found" }
+        },
+        "summary": "Obtain QR Code challenge for OneTimePaymentEntry",
+        "tags": ["OneTimePaymentEntry"]
+      }
+    },
+    "/v1/savings-plans/one-time-payments": {
+      "get": {
+        "description": "Lists all OneTimePayments under a SecuritiesAccount.",
+        "operationId": "getAllOneTimePayments",
+        "parameters": [
+          {
+            "description": "The securities account number for which to get the one time payments for a savings plan",
+            "in": "query",
+            "name": "securitiesAccountNo",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "The savings plan number of the one time payments",
+            "in": "query",
+            "name": "savingsNo",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/OneTimePaymentOut" } }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Get all OneTimePayments",
+        "tags": ["OneTimePayment"]
+      }
+    },
+    "/v1/savings-plans/one-time-payments/change": {
+      "post": {
+        "description": "Change an OneTimePayment. Returns a reference to the new object.",
+        "operationId": "updateOneTimePaymentEntry_1",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": {
+              "schema": { "$ref": "#/components/schemas/OneTimePaymentChangeIn" }
+            },
+            "application/json": { "schema": { "$ref": "#/components/schemas/OneTimePaymentChangeIn" } }
+          },
+          "required": true
+        },
+        "responses": { "201": { "description": "Created" }, "400": { "description": "Input invalid" } },
+        "summary": "Change OneTimePayment",
+        "tags": ["OneTimePayment"]
+      }
+    },
+    "/v1/savings-plans/one-time-payments/delete": {
+      "post": {
+        "description": "Delete an OneTimePayment.",
+        "operationId": "deleteOneTimePayment",
+        "requestBody": {
+          "content": {
+            "application/hal+json;charset=UTF-8": {
+              "schema": { "$ref": "#/components/schemas/OneTimePaymentDeleteIn" }
+            },
+            "application/json": { "schema": { "$ref": "#/components/schemas/OneTimePaymentDeleteIn" } }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted" },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" },
+          "409": { "description": "Conflict" }
+        },
+        "summary": "Delete OneTimePayment",
+        "tags": ["OneTimePayment"]
+      }
+    },
+    "/v1/savings-plans/one-time-payments/{oneTimePaymentNo}": {
+      "get": {
+        "description": "Select OneTimePaymentDetails under a SecuritiesAccount.",
+        "operationId": "getOneTimePaymentDetails",
+        "parameters": [
+          {
+            "description": "OneTimePayment no",
+            "example": 13713,
+            "in": "path",
+            "name": "oneTimePaymentNo",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "description": "The securities account number for which to get the one time payments for a savings plan",
+            "in": "query",
+            "name": "securitiesAccountNo",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "$ref": "#/components/schemas/OneTimePaymentDetailsOut" }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Select OneTimePaymentDetails",
+        "tags": ["OneTimePayment"]
+      }
+    },
+    "/v1/savings-plans/opponent-accounts": {
+      "get": {
+        "description": "Lists all clearing accounts under a SecuritiesAccount.",
+        "operationId": "getClearingAccounts",
+        "parameters": [
+          {
+            "description": "The securities account number for which to get the savings plans",
+            "in": "query",
+            "name": "securitiesAccountNo",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": { "schema": { "$ref": "#/components/schemas/ClearingAccountOut" } }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Get list of clearing accounts.",
+        "tags": ["Account"]
+      }
+    },
+    "/v1/savings-plans/{savingsNo}": {
+      "get": {
+        "description": "Get SavingsPlanDetails for given savings no under a SecuritiesAccount",
+        "operationId": "getSavingsPlanDetails",
+        "parameters": [
+          { "in": "path", "name": "savingsNo", "required": true, "schema": { "type": "string" } },
+          {
+            "description": "The securities account number for which to get the savings plan details",
+            "in": "query",
+            "name": "securitiesAccountNo",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/hal+json;charset=UTF-8": {
+                "schema": { "$ref": "#/components/schemas/SavingsPlanDetailsOut" }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "400": { "description": "Input invalid" },
+          "404": { "description": "Resource not found" }
+        },
+        "summary": "Get SavingsPlanDetails",
+        "tags": ["SavingsPlan"]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Category": {
+        "title": "Category",
+        "type": "object",
+        "properties": {
+          "currency": { "title": "Currency", "type": "string", "example": "EUR" },
+          "fields": {
+            "title": "CostCollection",
+            "type": "array",
+            "description": "Collection of cost attributes",
+            "items": { "$ref": "#/components/schemas/CategoryField" }
+          },
+          "label": { "title": "Label of the collection of categories", "type": "string" },
+          "name": { "title": "Category description", "type": "string" },
+          "totalSumAbsolute": { "title": "Total absolute sum of costs", "type": "string" },
+          "totalSumRelative": { "title": "Total relative sum of costs", "type": "string" }
+        }
+      },
+      "CategoryField": {
+        "title": "CategorieFields",
+        "type": "object",
+        "properties": {
+          "currency": { "title": "Currency", "type": "string", "example": "EUR" },
+          "fieldId": { "title": "Name of respective field for the category", "type": "string" },
+          "isEstimated": {
+            "title": "Indicates whether or not the given values are estimated. If the values are estimated, returns 'true', otherwise returns 'false'",
+            "type": "boolean"
+          },
+          "label": { "title": "Description of respective field for the category", "type": "string" },
+          "typeLabel": { "title": "Type of label", "type": "string" },
+          "valueAbsolute": { "title": "Absolute value of cost", "type": "string" },
+          "valueRelative": { "title": "Relative value of cost", "type": "string" },
+          "valueText": { "title": "Value of category as specified by fieldId and label", "type": "string" }
+        },
+        "description": "Collection of cost attributes"
+      },
+      "Challenge": { "type": "object", "properties": { "code": { "type": "string" }, "type": { "type": "string" } } },
+      "Cost": {
+        "title": "ExAnteCost",
+        "type": "object",
+        "properties": {
+          "categories": {
+            "title": "Cost document which contains cost details in json format",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Category" }
+          },
+          "currency": { "title": "Currency", "type": "string", "example": "EUR" },
+          "exAnteCostId": { "title": "ExAnteCost ID", "type": "string" },
+          "footnote": { "title": "Footnote for further details", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "remark": { "title": "Remark for further details", "type": "string" }
+        }
+      },
+      "Execution": {
+        "title": "Collection of Executions",
+        "type": "object",
+        "properties": {
+          "currency": { "title": "Currency", "type": "string", "example": "EUR" },
+          "executionAmount": {
+            "title": "Number of equities which were bought or sold during order execution",
+            "type": "string"
+          },
+          "executionPrice": { "title": "Quotation execution price", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "timestamp": { "title": "Timestamp of Order", "type": "string", "format": "date-time" },
+          "valueDate": { "title": "Value date", "type": "string" }
+        }
+      },
+      "Link": {
+        "type": "object",
+        "properties": {
+          "deprecation": { "type": "string" },
+          "href": { "type": "string" },
+          "hreflang": { "type": "string" },
+          "media": { "type": "string" },
+          "name": { "type": "string" },
+          "profile": { "type": "string" },
+          "rel": { "type": "string" },
+          "title": { "type": "string" },
+          "type": { "type": "string" }
+        }
+      },
+      "NextOrderIn": {
+        "title": "NextOrder",
+        "type": "object",
+        "properties": {
+          "drippingQuantity": { "type": "string" },
+          "limit": { "title": "Price limit of NextOrder", "type": "string" },
+          "orderSupplement": {
+            "title": "Additional property of order. Can be the following values: NORMAL, ICEBERG, IMMEDIATE_OR_CANCEL, FILL_OR_KILL",
+            "type": "string"
+          },
+          "stop": { "title": "Stop trigger for stop orders and One Cancels the Other Orders", "type": "string" },
+          "stopLimit": {
+            "title": "Limit for Stop Buy/Loss Limit Orders and One Cancels the Other Stop Buy/Loss Limit Orders. Marks the market limit for an Order after a stop trigger has been fired",
+            "type": "string"
+          },
+          "trailingDistance": {
+            "title": "Marks the distance used to calculcate the current stop trigger of a trailing order",
+            "type": "string"
+          },
+          "trailingLimitTolerance": {
+            "title": "Necessary to calculate the limit after stop trigger in case of a Trailing Stop Limit Order",
+            "type": "string"
+          },
+          "trailingNotation": {
+            "title": "Can be absolute or relative",
+            "pattern": "ABSOLUTE|RELATIVE",
+            "type": "string"
+          },
+          "validityDate": {
+            "title": "Validity date (YYYY-MM-DD). Default value: last day of the month",
+            "type": "string"
+          }
+        }
+      },
+      "NextOrderOut": {
+        "title": "NextOrder",
+        "type": "object",
+        "properties": {
+          "limit": { "title": "Price limit", "type": "string" },
+          "orderSupplement": {
+            "title": "Additional property of order. Can be the following values: NORMAL, ICEBERG, IMMEDIATE_OR_CANCEL, FILL_OR_KILL",
+            "type": "string"
+          },
+          "stop": { "title": "Stop trigger for stop orders and One Cancels the Other Orders", "type": "string" },
+          "stopLimit": {
+            "title": "Limit for Stop Buy/Loss Limit Orders and One Cancels the Other Stop Buy/Loss Limit Orders. Marks the market limit for an Order after a stop trigger has been fired",
+            "type": "string"
+          },
+          "trailingDistance": {
+            "title": "Marks the distance used to calculcate the current stop trigger of a trailing order",
+            "type": "string"
+          },
+          "trailingLimitTolerance": {
+            "title": "Necessary to calculate the limit after stop trigger in case of a Trailing Stop Limit Order",
+            "type": "string"
+          },
+          "trailingNotation": { "title": "Can be absolute or relative", "type": "string" },
+          "validityDate": { "title": "Validity date (YYYY-MM-DD)", "type": "string" }
+        }
+      },
+      "Order": {
+        "title": "Order",
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Order account number", "type": "string" },
+          "baseOrderNo": { "title": "Base Order number", "type": "integer", "format": "int64" },
+          "cancellationTimestamp": {
+            "title": "Timestamp of cancellation of Order",
+            "type": "string",
+            "format": "date-time"
+          },
+          "currency": { "title": "Currency", "type": "string", "example": "EUR" },
+          "direction": { "title": "Order type. Classifies which action is performed for Order", "type": "string" },
+          "drippingQuantity": {
+            "title": "Quantity of an iceberg order. Only useful for iceberg orders",
+            "type": "string"
+          },
+          "exAnteCostId": { "title": "ExAnte cost ID", "type": "string" },
+          "executionPrice": { "title": "Quotation execution price", "type": "string" },
+          "executions": {
+            "title": "Collection of Executions",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Execution" }
+          },
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "limit": { "title": "Price limit of Order", "type": "string" },
+          "limitToken": { "title": "Routing for trading venue - can be LIMIT_BASED or QUOTE_BASED", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "nextOrderNo": { "title": "Next Order number", "type": "integer", "format": "int64" },
+          "no": { "title": "Order number", "type": "integer", "format": "int64" },
+          "nominalAmount": { "title": "Nominal amount of Securities", "type": "string" },
+          "orderSupplement": {
+            "title": "Additional property of order. Can be the following values: NORMAL, ICEBERG, IMMEDIATE_OR_CANCEL, FILL_OR_KILL",
+            "type": "string"
+          },
+          "restriction": {
+            "title": "OrderRestriction",
+            "type": "string",
+            "enum": [
+              "MARKET_ORDER",
+              "LIMIT_ORDER",
+              "STOP_BUY/LOSS_MARKET",
+              "STOP_BUY/LOSS_LIMIT",
+              "OCO_STOP_BUY/LOSS_MARKET",
+              "OCO_STOP_BUY/LOSS_LIMIT",
+              "TRAILING_STOP_BUY/LOSS_MARKET",
+              "TRAILING_STOP_BUY/LOSS_LIMIT"
+            ]
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "securityName": { "title": "Name of security", "type": "string", "example": "DAIMLER AG" },
+          "state": {
+            "title": "OrderState",
+            "type": "string",
+            "enum": [
+              "ORDER_STATUS_OPEN",
+              "ORDER_STATUS_PARTIALLY_EXECUTED",
+              "ORDER_STATUS_EXECUTED",
+              "ORDER_STATUS_CANCELED",
+              "ORDER_STATUS_CANCELED_FORCED",
+              "ORDER_STATUS_CANCELED_REQUESTED",
+              "ORDER_STATUS_CANCELED_TIMEOUT",
+              "CANCEL_PENDING",
+              "STORNO",
+              "ERROR",
+              "PARTIALLY_EXECUTED_CANCEL",
+              "INACTIVE",
+              "NOT AVAILABLE"
+            ]
+          },
+          "stop": { "title": "Stop trigger for stop orders and One Cancels the Other Orders", "type": "string" },
+          "stopLimit": {
+            "title": "Limit for Stop Buy/Loss Limit Orders and One Cancels the Other Stop Buy/Loss Limit Orders. Marks the market limit for an Order after a stop trigger has been fired",
+            "type": "string"
+          },
+          "timestamp": { "title": "Timestamp of Order execution", "type": "string", "format": "date-time" },
+          "tradingVenueId": { "title": "TradingVenue ID", "type": "string" },
+          "tradingVenueName": { "title": "TradingVenue name", "type": "string" },
+          "trailingDistance": {
+            "title": "Marks the distance used to calculcate the current stop trigger of a trailing order",
+            "type": "string"
+          },
+          "trailingLimitTolerance": {
+            "title": "Necessary to calculate the limit after stop trigger in case of a Trailing Stop Limit order",
+            "type": "string"
+          },
+          "trailingNotation": { "title": "Can be absolute or relative", "type": "string" },
+          "validityDate": {
+            "title": "Validity date (YYYY-MM-DD). Default value: last day of the month",
+            "type": "string"
+          },
+          "wkn": { "title": "WKN", "type": "string", "example": "7100000" }
+        }
+      },
+      "OrderChangeIn": {
+        "title": "OrderChange",
+        "required": ["securitiesAccountNo"],
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Order account number", "type": "string" },
+          "drippingQuantity": {
+            "title": "Quantity of an iceberg order. Only useful for iceberg orders",
+            "type": "string"
+          },
+          "limit": { "title": "Price limit of OrderChange", "type": "string" },
+          "orderSupplement": {
+            "title": "Additional property of order. Can be the following values: NORMAL, ICEBERG, IMMEDIATE_OR_CANCEL, FILL_OR_KILL",
+            "type": "string"
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "stop": { "title": "Stop trigger for stop orders and One Cancels the Other Orders", "type": "string" },
+          "stopLimit": {
+            "title": "Limit for Stop Buy/Loss Limit Orders and One Cancels the Other Stop Buy/Loss Limit Orders. Marks the market limit for an Order after a stop trigger has been fired",
+            "type": "string"
+          },
+          "trailingDistance": {
+            "title": "Marks the distance used to calculcate the current stop trigger of a trailing order",
+            "type": "string"
+          },
+          "trailingLimitTolerance": {
+            "title": "Necessary to calculate the limit after stop trigger in case of a Trailing Stop Limit order",
+            "type": "string"
+          },
+          "trailingNotation": {
+            "title": "Can be absolute or relative",
+            "pattern": "ABSOLUTE|RELATIVE",
+            "type": "string"
+          },
+          "validityDate": {
+            "title": "Validity date (YYYY-MM-DD). Default value: last day of the month",
+            "type": "string"
+          }
+        }
+      },
+      "OrderChangeOut": {
+        "title": "OrderChangeOut",
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "OrderChange account number", "type": "string" },
+          "drippingQuantity": {
+            "title": "Quantity of an iceberg order. Only useful for iceberg orders",
+            "type": "string"
+          },
+          "entityState": {
+            "title": "EntityState",
+            "type": "string",
+            "enum": ["UNREADY", "READY_FOR_PLACING", "PLACED"]
+          },
+          "exAnteCostId": { "title": "ExAnteCost ID", "type": "string" },
+          "limit": { "title": "Price limit of OrderChange", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "no": { "title": "OrderChange number", "type": "string" },
+          "orderSupplement": {
+            "title": "Additional property of order. Can be the following values: NORMAL, ICEBERG, IMMEDIATE_OR_CANCEL, FILL_OR_KILL",
+            "type": "string"
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "stop": { "title": "Stop trigger for stop orders and One Cancels the Other Orders", "type": "string" },
+          "stopLimit": {
+            "title": "Limit for Stop Buy/Loss Limit Orders and One Cancels the Other Stop Buy/Loss Limit Orders. Marks the market limit for an Order after a stop trigger has been fired",
+            "type": "string"
+          },
+          "trailingDistance": {
+            "title": "Marks the distance used to calculcate the current stop trigger of a trailing order",
+            "type": "string"
+          },
+          "trailingLimitTolerance": {
+            "title": "Necessary to calculate the limit after stop trigger in case of a Trailing Stop Limit order",
+            "type": "string"
+          },
+          "trailingNotation": { "title": "Can be \"absolute\" or \"relative\"", "type": "string" },
+          "validityDate": {
+            "title": "Validity date (YYYY-MM-DD). Default value: last day of the month",
+            "type": "string"
+          }
+        }
+      },
+      "OrderCollection": {
+        "title": "Orders",
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Collection of Orders",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Order" }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } }
+        }
+      },
+      "OrderEntryIn": {
+        "title": "OrderEntry",
+        "required": ["accountNo", "direction", "nominalAmount", "securitiesAccountNo", "tradingVenueId"],
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Order account number", "type": "string" },
+          "direction": {
+            "title": "Order type. Classifies which action is performed for Order",
+            "pattern": "BUY|SELL",
+            "type": "string"
+          },
+          "drippingQuantity": {
+            "title": "Quantity of an iceberg order. Only useful for iceberg orders",
+            "type": "string"
+          },
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "limit": { "title": "Price limit of OrderEntry", "type": "string" },
+          "marketPlaceId": { "title": "Market place ID", "type": "string" },
+          "nextOrder": { "$ref": "#/components/schemas/NextOrderIn" },
+          "nominalAmount": { "title": "Amount of Securities", "type": "string" },
+          "orderSupplement": {
+            "title": "Additional property of order. Can be the following values: NORMAL, ICEBERG, IMMEDIATE_OR_CANCEL, FILL_OR_KILL",
+            "type": "string"
+          },
+          "overrideRiskClass": {
+            "title": "Flag indicating whether to override a warning from the risk class validation",
+            "pattern": "^(true|false)$",
+            "type": "string"
+          },
+          "positionId": { "title": "Position ID", "pattern": "^[a-zA-Z0-9]{1,39}$", "type": "string" },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "stop": { "title": "Stop trigger for stop orders and One Cancels the Other Orders", "type": "string" },
+          "stopLimit": {
+            "title": "Limit for Stop Buy/Loss Limit Orders and One Cancels the Other Stop Buy/Loss Limit Orders. Marks the market limit for an Order after a stop trigger has been fired",
+            "type": "string"
+          },
+          "tradingVenueId": { "title": "TradingVenue ID", "type": "string" },
+          "trailingDistance": {
+            "title": "Marks the distance used to calculcate the current stop trigger of a trailing order",
+            "type": "string"
+          },
+          "trailingLimitTolerance": {
+            "title": "Necessary to calculate the limit after stop trigger in case of a Trailing Stop Limit Order",
+            "type": "string"
+          },
+          "trailingNotation": {
+            "title": "Can be absolute or relative",
+            "pattern": "ABSOLUTE|RELATIVE",
+            "type": "string"
+          },
+          "validityDate": {
+            "title": "Validity date (YYYY-MM-DD). Default value: last day of the month",
+            "type": "string"
+          },
+          "wkn": { "title": "WKN", "type": "string", "example": "7100000" }
+        }
+      },
+      "OrderEntryOut": {
+        "title": "OrderEntryOut",
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "direction": { "title": "Direction can be BUY or SELL", "type": "string" },
+          "drippingQuantity": {
+            "title": "Quantity of an iceberg order. Only useful for iceberg orders",
+            "type": "string"
+          },
+          "entityState": {
+            "title": "EntityState",
+            "type": "string",
+            "enum": ["UNREADY", "READY_FOR_PLACING", "PLACED"]
+          },
+          "exAnteCostId": { "title": "ExAnteCost ID", "type": "string" },
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "limit": { "title": "Price limit of OrderEntry", "type": "string" },
+          "limitToken": { "title": "Routing for trading venue - can be LIMIT_BASED or QUOTE_BASED", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "marketPlaceId": { "title": "Market place ID", "type": "string" },
+          "nextOrder": { "$ref": "#/components/schemas/NextOrderOut" },
+          "no": { "title": "OrderEntry number", "type": "string" },
+          "nominalAmount": { "title": "Amount of Securities", "type": "string" },
+          "orderSupplement": {
+            "title": "Additional property of order. Can be the following values: NORMAL, ICEBERG, IMMEDIATE_OR_CANCEL, FILL_OR_KILL",
+            "type": "string"
+          },
+          "overrideRiskClass": {
+            "title": "Flag indicating whether to override a warning from the risk class validation",
+            "type": "string"
+          },
+          "positionId": { "title": "Position ID", "type": "string" },
+          "secondsUntilExpiration": {
+            "title": "Time to live in seconds for the OrderEntry",
+            "type": "integer",
+            "format": "int64"
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "stop": { "title": "Stop trigger for stop orders and One Cancels the Other Orders", "type": "string" },
+          "stopLimit": {
+            "title": "Limit for Stop Buy/Loss Limit Orders and One Cancels the Other Stop Buy/Loss Limit Orders. Marks the market limit for an Order after a stop trigger has been fired",
+            "type": "string"
+          },
+          "tradingVenueId": { "title": "TradingVenue ID", "type": "string" },
+          "trailingDistance": {
+            "title": "Marks the distance used to calculcate the current stop trigger of a trailing Order",
+            "type": "string"
+          },
+          "trailingLimitTolerance": {
+            "title": "Necessary to calculate the limit after stop trigger in case of a Trailing Stop Limit Order",
+            "type": "string"
+          },
+          "trailingNotation": { "title": "Can be absolute or relative", "type": "string" },
+          "validityDate": {
+            "title": "Validity date (YYYY-MM-DD). Default value: last day of the month",
+            "type": "string"
+          },
+          "wkn": { "title": "WKN", "type": "string", "example": "7100000" }
+        }
+      },
+      "OrderTransactionState": {
+        "type": "object",
+        "properties": {
+          "id": { "title": "OrderTransaction ID", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "nextOrderNo": { "title": "Next order number", "type": "integer", "format": "int64" },
+          "orderNo": { "title": "Order number", "type": "integer", "format": "int64" },
+          "state": {
+            "title": "TransactionState",
+            "type": "string",
+            "enum": [
+              "NEW",
+              "AUTHORIZATION_PENDING",
+              "AUTHORIZATION_ACCEPTED",
+              "AUTHORIZATION_ERROR",
+              "AUTHORIZATION_REJECTED",
+              "AUTHORIZATION_USER_OFFLINE",
+              "AUTHORIZATION_USER_TIMEOUT",
+              "AUTHORIZATION_ACCEPTED_DONE",
+              "EXECUTING",
+              "EXECUTION_SUCCESSFUL",
+              "EXECUTION_FAILED",
+              "EXECUTION_TIMED_OUT"
+            ]
+          }
+        }
+      },
+      "Quote": {
+        "title": "Quote object",
+        "type": "object",
+        "properties": {
+          "buyQuotation": { "title": "Quote at which a customer can buy", "type": "string" },
+          "currency": { "title": "Currency", "type": "string", "example": "EUR" },
+          "maxBuyAmount": { "title": "Maximum Quote purchase amount", "type": "string" },
+          "maxSellAmount": { "title": "Maximum Quote sale amount", "type": "string" },
+          "quoteTimestamp": { "title": "Timestamp of Quote", "type": "string", "format": "date-time" },
+          "sellQuotation": { "title": "Quote at which a customer can sell", "type": "string" }
+        }
+      },
+      "QuoteIn": {
+        "title": "QuoteIn",
+        "required": ["direction", "marketPlaceId", "nominalAmount", "tradingVenueId"],
+        "type": "object",
+        "properties": {
+          "direction": { "pattern": "BUY|SELL", "type": "string" },
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "marketPlaceId": { "title": "Market place ID", "type": "string" },
+          "nominalAmount": { "title": "Amount of Securities", "type": "string" },
+          "tradingVenueId": { "title": "TradingVenue ID", "type": "string" },
+          "wkn": { "title": "WKN", "type": "string", "example": "7100000" }
+        }
+      },
+      "QuoteOrderEntryIn": {
+        "title": "QuoteOrderEntry",
+        "required": [
+          "accountNo",
+          "direction",
+          "marketPlaceId",
+          "nominalAmount",
+          "securitiesAccountNo",
+          "tradingVenueId"
+        ],
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Order account number", "type": "string" },
+          "direction": { "pattern": "BUY|SELL", "type": "string" },
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "limit": { "title": "Price limit of QuoteOrderEntry", "type": "string" },
+          "marketPlaceId": { "title": "Market place ID", "type": "string" },
+          "nominalAmount": { "title": "Amount of Securities", "type": "string" },
+          "overrideRiskClass": {
+            "title": "Flag indicating whether to override a warning from the risk class validation",
+            "pattern": "^(true|false)$",
+            "type": "string"
+          },
+          "positionId": { "title": "Position ID", "pattern": "^[a-zA-Z0-9]{1,39}$", "type": "string" },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "tradingVenueId": { "title": "TradingVenue ID", "type": "string" },
+          "wkn": { "title": "WKN", "type": "string", "example": "7100000" }
+        }
+      },
+      "QuoteOrderEntryOut": {
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "direction": { "title": "Direction can be BUY or SELL", "type": "string" },
+          "entityState": {
+            "title": "EntityState",
+            "type": "string",
+            "enum": ["UNREADY", "READY_FOR_PLACING", "PLACED"]
+          },
+          "exAnteCostId": { "title": "ExAnteCost ID", "type": "string" },
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "limit": { "title": "Price limit of QuoteOrderEntry", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "marketMakerId": { "title": "Market maker ID", "type": "string" },
+          "marketPlaceId": { "title": "MarketPlace ID", "type": "string" },
+          "marketPlaceOrderNo": { "title": "TradingVenue order number", "type": "string" },
+          "no": { "title": "QuoteOrderEntry number", "type": "string" },
+          "nominalAmount": { "title": "Amount of Securities", "type": "string" },
+          "orderNo": {
+            "title": "OrderEntry number. Returned only after QuoteOrderEntry is placed",
+            "type": "integer",
+            "format": "int64"
+          },
+          "overrideRiskClass": {
+            "title": "Flag indicating whether to override a warning from the risk class validation",
+            "type": "string"
+          },
+          "positionId": { "title": "Position ID", "type": "string" },
+          "quote": { "$ref": "#/components/schemas/Quote" },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "securityName": { "title": "Name of security", "type": "string", "example": "DAIMLER AG" },
+          "timestamp": { "title": "QuoteOrderEntry timestamp", "type": "string", "format": "date-time" },
+          "tradingVenueId": { "title": "TradingVenue ID", "type": "string" },
+          "wkn": { "title": "WKN", "type": "string", "example": "7100000" }
+        }
+      },
+      "AuthMethod": {
+        "type": "object",
+        "properties": {
+          "authStatus": { "title": "Authentication status", "type": "string", "example": "U" },
+          "authType": { "title": "Authentication type", "type": "string", "example": "TOKEN" }
+        },
+        "title": "Collection of authentication methods"
+      },
+      "AuthenticationData": {
+        "type": "object",
+        "properties": {
+          "authMethods": {
+            "title": "Collection of authentication methods",
+            "uniqueItems": true,
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/AuthMethod" }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "login": { "title": "Login", "type": "string" }
+        }
+      },
+      "ProfileTransactionStateOut": {
+        "type": "object",
+        "properties": {
+          "id": { "title": "ProfileTransaction ID", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "state": {
+            "title": "TransactionStateOut",
+            "type": "string",
+            "enum": [
+              "NEW",
+              "AUTHORIZATION_PENDING",
+              "AUTHORIZATION_ACCEPTED",
+              "AUTHORIZATION_ERROR",
+              "AUTHORIZATION_REJECTED",
+              "AUTHORIZATION_USER_OFFLINE",
+              "AUTHORIZATION_USER_TIMEOUT",
+              "AUTHORIZATION_ACCEPTED_DONE",
+              "EXECUTING",
+              "EXECUTION_SUCCESSFUL",
+              "EXECUTION_FAILED",
+              "EXECUTION_TIMED_OUT"
+            ]
+          }
+        }
+      },
+      "SessionLevelOut": {
+        "type": "object",
+        "properties": { "authTrustLevel": { "type": "integer", "format": "int32" } }
+      },
+      "SessionTanStatus": {
+        "type": "object",
+        "properties": { "status": { "title": "Status", "type": "string", "enum": ["ACTIVATED", "DEACTIVATED"] } },
+        "title": "SessionTanStatus"
+      },
+      "Account": {
+        "title": "Account",
+        "type": "object",
+        "properties": {
+          "currency": { "title": "Clearing account currency", "type": "string", "example": "EUR" },
+          "iban": { "title": "IBAN of account", "type": "string", "example": "DE15XXXXXX800XXXXXXXX7" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "no": { "title": "Clearing account number", "type": "string", "example": "123456789" },
+          "owner": { "title": "Clearing account owner", "type": "string", "example": "Mr. Example" },
+          "type": {
+            "title": "AccountType",
+            "type": "string",
+            "example": "Verrechnungskonto",
+            "enum": [
+              "CLEARING_ACCOUNT",
+              "CALL_MONEY",
+              "CALL_MONEY_DIRECT",
+              "FIXED_DEPOSIT",
+              "DEPOT",
+              "FOREIGN_CURRENCY_ACOUNT",
+              "CFD_MARGIN_ACCOUNT",
+              "CFD_DEMO_ACCOUNT",
+              "CFD_PLAY_ACCOUNT",
+              "EUREX_MARGIN_ACCOUNT",
+              "BATCH_PROCESS",
+              "GIRO_ACCOUNT",
+              "INCOME_PLAN",
+              "SAVINGS_BOND",
+              "PREMIUM_SAVINGS_PLAN",
+              "INTEREST_GROWTH_RATE",
+              "BASE_ACCOUNT"
+            ]
+          }
+        }
+      },
+      "AccountCollection": {
+        "title": "Accounts",
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Collection of accounts",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Account" }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } }
+        }
+      },
+      "Paging": {
+        "title": "Pages",
+        "type": "object",
+        "properties": {
+          "page": { "title": "current page", "type": "integer", "format": "int32" },
+          "perPage": { "title": "max count of visible items per page", "type": "integer", "format": "int32" },
+          "totalItems": { "title": "max count of items absolute", "type": "integer", "format": "int32" },
+          "totalPage": { "title": "max count of calculated pages", "type": "integer", "format": "int32" }
+        }
+      },
+      "Position": {
+        "title": "Position",
+        "type": "object",
+        "properties": {
+          "assetClass": {
+            "title": "SecurityClass",
+            "type": "string",
+            "example": "STOCK",
+            "enum": [
+              "STOCK",
+              "BOND",
+              "WARRANT",
+              "CERTIFICATE",
+              "FUND",
+              "HEDGE_FUND",
+              "FUNDS",
+              "TRACKERS_FRANCE",
+              "ETF_EXCHANGE_TRADED_FUNDS",
+              "PRECIOUS_METAL",
+              "ANY_OTHER",
+              "PARTICIPATION_CERTIFICATE",
+              "PARTICIPATION_CERTIFICATE_WITH_STOCK_CHARACTER",
+              "PARTICIPATION_CERTIFICATE_WITH_PENSION_CHARACTER"
+            ]
+          },
+          "currency": { "title": "Currency of Position", "type": "string", "example": "EUR" },
+          "custodianCountry": {
+            "title": "Description of custodian country",
+            "type": "string",
+            "example": "Deutschland"
+          },
+          "id": { "title": "Id of the actual position", "type": "string" },
+          "initialPrice": { "title": "Initial price", "type": "string" },
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "lockState": {
+            "title": "The current lock state of the position",
+            "type": "string",
+            "enum": [
+              "NO_LOCK",
+              "NO_MORTGAGE",
+              "LOCK_FOR_CREDIT",
+              "LOCK_PLEDGE_IN_FAVOR_OF_THIRD_PARTIES",
+              "LOCK_BECAUSE_OF_SEIZURE",
+              "LOCK_ON_CUSTOMER_DEMAND",
+              "WORKFORCE_LOCK_WR_SAFE",
+              "LOCK_DUE_TO_CLEARING",
+              "RESTRICTED_CA",
+              "WORTHLESS_ASSET",
+              "WORKFORCE_LOCK_COMPANY",
+              "WORKFORCE_LOCK_COMPANY_VL",
+              "LOCK_EMPLOYEE_SHARE",
+              "LOCK_NOT_FOR_SALE",
+              "LOCK_VV",
+              "LOCK_DELIVERY_SAFE",
+              "TAX_CORRECTION",
+              "LOCK_EUREX_OPTION",
+              "LOCK_CORPORATE_ACTION",
+              "LOCK_EXCHANGE_SAFE",
+              "LOCK_SECURITIES_LENDING",
+              "LOCK_TERMINATED_POSITION",
+              "LOCK_EXCHANGE_VA_CS",
+              "INCOMPLETE_LOCK",
+              "LOCK_UNKNOWN_RECIPIENT_CS",
+              "LOCK_AMOUNT_NOT",
+              "LOCK_TERMINATE_DELIVERY_SAFE",
+              "UNKNOWN"
+            ]
+          },
+          "nominalAmount": { "title": "Nominal amount of security", "type": "string" },
+          "profitLossAbsolut": { "title": "Absolute profit or loss of actual position", "type": "string" },
+          "profitLossPercent": { "title": "Profit or loss of actual position in percent", "type": "string" },
+          "securityName": { "title": "Name of security", "type": "string", "example": "DAIMLER AG" },
+          "value": { "title": "Value of equity", "type": "string", "example": "33.35" },
+          "wkn": { "title": "WKN", "type": "string", "example": "710000" }
+        }
+      },
+      "PositionCollection": {
+        "title": "Positions",
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "List of positions",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Position" }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "paging": { "$ref": "#/components/schemas/Paging" }
+        }
+      },
+      "PositionHistory": {
+        "title": "PositionHistory",
+        "type": "object",
+        "properties": {
+          "direction": { "title": "Direction can be BUY or SELL", "type": "string" },
+          "entryDescription": { "title": "Entry description of entry", "type": "string", "example": "KAUF" },
+          "initialPrice": { "title": "Initial price", "type": "string", "example": "0,181609" },
+          "initialValue": { "title": "Initial value", "type": "string", "example": "998,85" },
+          "isin": { "title": "ISIN", "type": "string", "example": "NL0011375019" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "nominalAmount": { "title": "Nominal amount of execution", "type": "string", "example": "5.500,00" },
+          "price": { "title": "Price", "type": "string", "example": "0,0899" },
+          "profitLossAbsolut": { "title": "Profit / loss absolut", "type": "string", "example": "-504,40" },
+          "purchaseDate": { "title": "Purchase date", "type": "string", "format": "date", "example": "2016-12-14" },
+          "securityName": { "title": "Name of Security", "type": "string", "example": "STEINHOFF INT.HLDG.EO-,50" },
+          "wkn": { "title": "WKN", "type": "string", "example": "71000" }
+        }
+      },
+      "PositionHistoryCollection": {
+        "title": "PositionsHistories",
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Collection of PositionHistory items",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/PositionHistory" }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } }
+        }
+      },
+      "SecuritiesAccount": {
+        "title": "SecuritiesAccount",
+        "type": "object",
+        "properties": {
+          "accountBalance": { "title": "Account balance", "type": "number", "example": 12500 },
+          "buyingPower": { "title": "Account buying power", "type": "number", "example": 10000 },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "no": { "title": "Securities account number", "type": "string", "example": "123456789" },
+          "owner": { "title": "Account owner", "type": "string", "example": "Mr Example" }
+        }
+      },
+      "SecuritiesAccountCollection": {
+        "title": "SecuritiesAccounts",
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Collection of SecuritiesAccounts",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SecuritiesAccount" }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } }
+        }
+      },
+      "SecuritiesAccountPerformance": {
+        "title": "SecuritesAccountPerformance",
+        "type": "object",
+        "properties": {
+          "balance": { "title": "Total portfolio value", "type": "string", "example": "53.41" },
+          "balanceMetal": { "title": "Total deposit of precious metals", "type": "string", "example": "0.0" },
+          "balanceStock": { "title": "Total deposit Securities", "type": "string", "example": "53.41" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "sumProfitLoss": { "title": "Total absolute performance", "type": "string", "example": "-31.75" },
+          "sumProfitLossPercent": { "title": "Total performance in percentage", "type": "string", "example": "-37.28" }
+        }
+      },
+      "OrderModel": {
+        "type": "object",
+        "properties": {
+          "isNextOrderPossible": { "type": "boolean" },
+          "orderRestriction": {
+            "type": "string",
+            "enum": [
+              "MARKET_ORDER",
+              "LIMIT_ORDER",
+              "STOP_BUY/LOSS_MARKET",
+              "STOP_BUY/LOSS_LIMIT",
+              "OCO_STOP_BUY/LOSS_MARKET",
+              "OCO_STOP_BUY/LOSS_LIMIT",
+              "TRAILING_STOP_BUY/LOSS_MARKET",
+              "TRAILING_STOP_BUY/LOSS_LIMIT"
+            ]
+          },
+          "orderSupplementList": { "type": "array", "items": { "$ref": "#/components/schemas/OrderSupplementInfo" } }
+        }
+      },
+      "OrderModelCollection": {
+        "type": "object",
+        "properties": {
+          "orderModels": { "type": "array", "items": { "$ref": "#/components/schemas/OrderModel" } },
+          "orderType": {
+            "type": "string",
+            "enum": [
+              "BUY",
+              "OFFERING",
+              "SELL",
+              "INBOOKING",
+              "OUTBOOKING",
+              "PREBOOKING",
+              "PREEMPTIVE_RIGHT_SELL",
+              "PREEMPTIVE_RIGHT_BUY",
+              "OVERBOOKING_OUT",
+              "OVERBOOKING_IN",
+              "STORNO_BUY",
+              "STORNO_SELL",
+              "SUBSCRIBE_BUY",
+              "SHORT_SELL_BY_CUSTOMER",
+              "SHORT_COVER_BY_CUSTOMER",
+              "FORCED_SHORT_COVER_BY_BACKEND"
+            ]
+          }
+        },
+        "title": "OrderModelCollection"
+      },
+      "OrderSupplementInfo": {
+        "type": "object",
+        "properties": {
+          "mandatory": { "type": "boolean" },
+          "orderSupplement": { "type": "string", "enum": ["NORMAL", "ICEBERG", "IMMEDIATE_OR_CANCEL", "FILL_OR_KILL"] }
+        }
+      },
+      "TradingVenue": {
+        "type": "object",
+        "properties": {
+          "currency": { "title": "Currency for Trading Venue", "type": "string", "example": "EUR" },
+          "defaultTradingVenue": {
+            "title": "Enables default equity issue trading venue",
+            "type": "boolean",
+            "example": true
+          },
+          "goodForDay": {
+            "title": "Validity date good for day",
+            "type": "string",
+            "format": "date",
+            "example": "2018-07-06"
+          },
+          "goodTillCancelled": {
+            "title": "Validity date good until cancelled",
+            "type": "string",
+            "format": "date",
+            "example": "2018-07-06"
+          },
+          "goodTillDate": {
+            "title": "Validity date user defined",
+            "type": "string",
+            "format": "date",
+            "example": "2018-07-06"
+          },
+          "goodTillUltimo": {
+            "title": "Validity date good until end of month",
+            "type": "string",
+            "format": "date",
+            "example": "2018-07-06"
+          },
+          "homeTradingVenue": { "title": "Enables home TradingVenue", "type": "boolean", "example": true },
+          "limitBasedBuy": { "title": "isLimitBasedBuy", "type": "boolean" },
+          "limitBasedSell": { "title": "isLimitBasedSell", "type": "boolean" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "marketPlaceIdForLimit": { "title": "Market place ID used for limit orders", "type": "string" },
+          "marketPlaceIdForQuote": { "title": "Market place ID used for quote orders", "type": "string" },
+          "orderModelCollection": {
+            "title": "OrderModelCollection",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/OrderModelCollection" }
+          },
+          "quoteBasedBuy": { "title": "isQuoteBasedBuy", "type": "boolean" },
+          "quoteBasedSell": { "title": "isQuoteBaseSell", "type": "boolean" },
+          "tradingVenueId": { "title": "TradingVenue ID", "type": "string", "example": "MUN" },
+          "tradingVenueName": { "title": "Extended name of TradingVenue", "type": "string", "example": "München" }
+        },
+        "title": "TradingVenue"
+      },
+      "TradingVenueCollection": {
+        "type": "object",
+        "properties": {
+          "isin": { "title": "ISIN", "type": "string", "example": "DE0007100000" },
+          "items": {
+            "title": "Collection of TradingVenues",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TradingVenue" }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "wkn": { "title": "WKN", "type": "string", "example": "710000" }
+        },
+        "title": "TradingVenueCollection"
+      },
+      "ClearingAccount": {
+        "title": "List of Clearing Accounts",
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "accountingOpponent": { "title": "Name of the owner of the external account", "type": "string" },
+          "bankNameOpponent": { "title": "Bank Name of the external bank", "type": "string" },
+          "bicOpponent": { "title": "Bank Identifier Code of the external bank", "type": "string" },
+          "ibanOpponent": { "title": "International Bank Account Number of the external bank", "type": "string" },
+          "mandateId": { "title": "ID of the mandate.", "type": "string" },
+          "type": { "title": "Type of the clearing account. (Debit/Booking)", "type": "string" }
+        }
+      },
+      "ClearingAccountOut": {
+        "type": "object",
+        "properties": {
+          "clearingAccounts": {
+            "title": "List of Clearing Accounts",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ClearingAccount" }
+          }
+        }
+      },
+      "OneTimePaymentChangeIn": {
+        "title": "OneTimePaymentChangeIn",
+        "required": ["amount", "dateExecution", "oneTimePaymentNo", "securitiesAccountNo"],
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "accountingOpponent": { "title": "Name of the owner of the external account", "type": "string" },
+          "amount": { "title": "The amount that should be paid", "type": "string" },
+          "bicOpponent": { "title": "Bank Identifier Code of the external bank", "type": "string" },
+          "costId": { "title": "An unique ID of an ex-ante order cost summary", "type": "string" },
+          "dateExecution": { "title": "Date at which one time payment may be executed", "type": "string" },
+          "ibanOpponent": { "title": "International Bank Account Number of the external bank", "type": "string" },
+          "oneTimePaymentNo": { "title": "One time payment number", "type": "string" },
+          "overrideRiskClass": {
+            "title": "User acknowledgement to continue despite earlier warning about exceeded risk class of investment",
+            "type": "string"
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" }
+        }
+      },
+      "OneTimePaymentChangeOut": {
+        "title": "OneTimePaymentChangeOut",
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "accountingOpponent": { "title": "Name of the owner of the external account", "type": "string" },
+          "amount": { "title": "The amount that should be payed", "type": "string" },
+          "bicOpponent": { "title": "Bank Identifier Code of the external bank", "type": "string" },
+          "costId": { "title": "An unique ID of an ex-ante order cost summary", "type": "string" },
+          "dateExecution": { "title": "Date at which one time payment may be executed", "type": "string" },
+          "entityState": {
+            "title": "EntityState",
+            "type": "string",
+            "enum": ["UNREADY", "HAS_WARNINGS", "READY_FOR_AUTHORIZATION", "AUTHORIZED"]
+          },
+          "exceptionCode": {
+            "title": "Exception code. Will be set if the savings plan could not be saved.",
+            "type": "string"
+          },
+          "exceptionMessage": {
+            "title": "Exception message. Will be set if the savings plan could not be saved.",
+            "type": "string"
+          },
+          "ibanOpponent": { "title": "International Bank Account Number of the external bank", "type": "string" },
+          "id": { "title": "One time payment change ID", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "oneTimePaymentNo": { "title": "One time payment number", "type": "string" },
+          "overrideRiskClass": {
+            "title": "User acknowledgement to continue despite earlier warning about exceeded risk class of investment",
+            "type": "string"
+          },
+          "secondsUntilExpiration": {
+            "title": "Time to live in seconds for the SavingsPlanChange",
+            "type": "integer",
+            "format": "int64"
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" }
+        }
+      },
+      "OneTimePaymentDeleteIn": {
+        "title": "OneTimePaymentDeleteIn",
+        "required": ["oneTimePaymentNo", "securitiesAccountNo"],
+        "type": "object",
+        "properties": {
+          "challenge": { "$ref": "#/components/schemas/Challenge" },
+          "entityState": {
+            "title": "EntityState",
+            "type": "string",
+            "enum": ["UNREADY", "HAS_WARNINGS", "READY_FOR_AUTHORIZATION", "AUTHORIZED"]
+          },
+          "id": { "type": "string" },
+          "oneTimePaymentNo": { "title": "One time payment number", "type": "string" },
+          "secondsUntilExpiration": { "type": "integer", "format": "int64" },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "transactionId": { "type": "string" },
+          "userId": { "type": "string" }
+        }
+      },
+      "OneTimePaymentDetailsOut": {
+        "title": "OneTimePaymentDetailsOut",
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "accountingOpponent": { "title": "Name of the owner of the external account", "type": "string" },
+          "amount": { "title": "The amount that should be payed", "type": "string" },
+          "bankNameOpponent": { "title": "Bank Name of the external bank", "type": "string" },
+          "bicOpponent": { "title": "Bank Identifier Code of the external bank", "type": "string" },
+          "dateExecution": { "title": "Date at which savings plan may be executed", "type": "string" },
+          "ibanOpponent": { "title": "International Bank Account Number of the external bank", "type": "string" }
+        }
+      },
+      "OneTimePaymentEntryIn": {
+        "title": "OneTimePaymentEntryIn",
+        "required": ["amount", "dateExecution", "savingsNo", "securitiesAccountNo"],
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "accountingOpponent": { "title": "Name of the owner of the external account", "type": "string" },
+          "amount": { "title": "The amount that should be paid", "type": "string" },
+          "bicOpponent": { "title": "Bank Identifier Code of the external bank", "type": "string" },
+          "costId": { "title": "An unique ID of an ex-ante order cost summary", "type": "string" },
+          "dateExecution": { "title": "Date at which one time payment may be executed", "type": "string" },
+          "ibanOpponent": { "title": "International Bank Account Number of the external bank", "type": "string" },
+          "overrideRiskClass": {
+            "title": "User acknowledgement to continue despite earlier warning about exceeded risk class of investment",
+            "type": "string"
+          },
+          "savingsNo": { "title": "Savings plan number", "type": "string" },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" }
+        }
+      },
+      "OneTimePaymentEntryOut": {
+        "title": "OneTimePaymentEntryOut",
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "accountingOpponent": { "title": "Name of the owner of the external account", "type": "string" },
+          "amount": { "title": "The amount that should be payed", "type": "string" },
+          "bicOpponent": { "title": "Bank Identifier Code of the external bank", "type": "string" },
+          "costId": { "title": "An unique ID of an ex-ante order cost summary", "type": "string" },
+          "dateExecution": { "title": "Date at which savings plan may be executed", "type": "string" },
+          "entityState": {
+            "title": "EntityState",
+            "type": "string",
+            "enum": ["UNREADY", "HAS_WARNINGS", "READY_FOR_AUTHORIZATION", "AUTHORIZED"]
+          },
+          "exceptionCode": {
+            "title": "Exception code. Will be set if the savings plan could not be saved.",
+            "type": "string"
+          },
+          "exceptionMessage": {
+            "title": "Exception message. Will be set if the savings plan could not be saved.",
+            "type": "string"
+          },
+          "ibanOpponent": { "title": "International Bank Account Number of the external bank", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "oneTimePaymentNo": { "title": "One time payment number", "type": "string" },
+          "overrideRiskClass": {
+            "title": "User acknowledgement to continue despite earlier warning about exceeded risk class of investment",
+            "type": "string"
+          },
+          "savingsNo": { "title": "Savings plan number", "type": "string" },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" }
+        }
+      },
+      "OneTimePaymentOut": {
+        "title": "OneTimePaymentOut",
+        "type": "object",
+        "properties": {
+          "currency": { "title": "The currency of the one-time payment value", "type": "string" },
+          "dateExecution": { "title": "Date at which savings plan may be executed", "type": "string" },
+          "oneTimePaymentNo": { "title": "One time payment number", "type": "string" },
+          "orderNo": {
+            "title": "The number identifying the order that sells from the given savings plan one-time payment.",
+            "type": "string"
+          },
+          "paymentStatus": { "title": "Status of the one-time-payment", "type": "string" },
+          "securityAmount": { "title": "The amount of security to sell for the one-time payment", "type": "string" },
+          "status": {
+            "title": "OrderState",
+            "type": "string",
+            "enum": [
+              "ORDER_STATUS_OPEN",
+              "ORDER_STATUS_PARTIALLY_EXECUTED",
+              "ORDER_STATUS_EXECUTED",
+              "ORDER_STATUS_CANCELED",
+              "ORDER_STATUS_CANCELED_FORCED",
+              "ORDER_STATUS_CANCELED_REQUESTED",
+              "ORDER_STATUS_CANCELED_TIMEOUT",
+              "CANCEL_PENDING",
+              "STORNO",
+              "ERROR",
+              "PARTIALLY_EXECUTED_CANCEL",
+              "INACTIVE",
+              "NOT AVAILABLE"
+            ]
+          },
+          "type": {
+            "title": "The type of one-time payment item.",
+            "type": "string",
+            "enum": ["SAVINGSPLAN", "PAYOUTPLAN", "SAVE", "PAYOUT"]
+          },
+          "value": { "title": "The value of one-time payment for which to buy", "type": "string" }
+        }
+      },
+      "QrCodeOut": {
+        "type": "object",
+        "properties": {
+          "qrCode": { "type": "string" },
+          "qrCodeCreatedAt": { "type": "string" },
+          "qrCodePayload": { "type": "string" },
+          "qrCodeValidTo": { "type": "string" }
+        }
+      },
+      "SavingsPlanAppointmentOut": {
+        "title": "SavingsPlanAppointment",
+        "type": "object",
+        "properties": {
+          "date": { "type": "string" },
+          "status": { "type": "string", "enum": ["OPEN", "CLOSED"] },
+          "type": { "type": "string", "enum": ["EXEC", "DEBIT", "SWITCH", "FORWARD"] }
+        }
+      },
+      "SavingsPlanChangeIn": {
+        "title": "SavingsPlanChangeIn",
+        "required": ["savingsPlans", "securitiesAccountNo"],
+        "type": "object",
+        "properties": {
+          "savingsPlans": {
+            "title": "List of SavingsPlans",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SavingsPlanChangeItemIn" }
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" }
+        }
+      },
+      "SavingsPlanChangeItemIn": {
+        "title": "SavingsPlanChangeItemIn",
+        "required": ["savingsPlanNo", "savingsRate"],
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "accountingOpponent": { "title": "Name of the owner of the external account", "type": "string" },
+          "bicOpponent": { "title": "Bank Identifier Code of the external bank", "type": "string" },
+          "dateFirstExecution": { "title": "Date at which savings plan may be first executed", "type": "string" },
+          "dateLastExecution": {
+            "title": "Date at which savings plan may be executed for the last time. If not supplied, unlimited is assumed",
+            "type": "string"
+          },
+          "delayedExecutionOverride": {
+            "title": "User acknowledgement to continue despite earlier warning about delayed execution of investment",
+            "type": "string"
+          },
+          "ibanOpponent": { "title": "International Bank Account Number of the external bank", "type": "string" },
+          "interval": { "title": "Interval at which plan is executed", "type": "string" },
+          "intervalDay": { "title": "Interval day at which plan is executed", "type": "string" },
+          "overrideRiskClass": {
+            "title": "User acknowledgement to continue despite earlier warning about exceeded risk class of investment",
+            "type": "string"
+          },
+          "pauseStartDate": { "title": "Date at which savings plan pause can start", "type": "string" },
+          "pauseStopDate": { "title": "Date at which savings plan pause can stop", "type": "string" },
+          "resetDateLastExecution": { "title": "Reset flag for savings plan date last execution", "type": "string" },
+          "resetPauseStartDate": { "title": "Reset flag for savings plan pause start", "type": "string" },
+          "resetPauseStopDate": { "title": "Reset flag for savings plan pause stop", "type": "string" },
+          "savingsDynamic": {
+            "title": "Dynamic rate at which the savings rate increases in percents",
+            "type": "string"
+          },
+          "savingsDynamicDate": { "title": "Date at which the dynamic rate is applied", "type": "string" },
+          "savingsName": { "title": "Savings plan name", "type": "string" },
+          "savingsPlanNo": {
+            "title": "savings plan number of the savings plan that will be updated",
+            "type": "string"
+          },
+          "savingsRate": {
+            "title": "The value at which securities are bought or sold for a single savings interval",
+            "type": "string"
+          }
+        }
+      },
+      "SavingsPlanChangeItemOut": {
+        "title": "SavingsPlanChangeItemOut",
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "accountingOpponent": { "title": "Name of the owner of the external account", "type": "string" },
+          "bicOpponent": { "title": "Bank Identifier Code of the external bank", "type": "string" },
+          "dateFirstExecution": { "title": "Date at which savings plan may be first executed", "type": "string" },
+          "dateLastExecution": {
+            "title": "Date at which savings plan may be executed for the last time. If not supplied, unlimited is assumed",
+            "type": "string"
+          },
+          "delayedExecutionOverride": {
+            "title": "User acknowledgement to continue despite earlier warning about delayed execution of investment",
+            "type": "string"
+          },
+          "exAnteCostId": { "title": "ExAnteCost ID", "type": "string" },
+          "exceptionCode": { "title": "Exception code", "type": "string" },
+          "exceptionMessage": { "title": "Exception message", "type": "string" },
+          "ibanOpponent": { "title": "International Bank Account Number of the external bank", "type": "string" },
+          "interval": { "title": "Interval at which plan is executed", "type": "string" },
+          "intervalDay": { "title": "Interval day at which plan is executed", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "overrideRiskClass": {
+            "title": "User acknowledgement to continue despite earlier warning about exceeded risk class of investment",
+            "type": "string"
+          },
+          "pauseStartDate": { "title": "Date at which savings plan pause can start", "type": "string" },
+          "pauseStopDate": { "title": "Date at which savings plan pause can stop", "type": "string" },
+          "resetDateLastExecution": { "title": "Reset flag for savings plan date last execution", "type": "string" },
+          "resetPauseStartDate": { "title": "Reset flag for savings plan pause start", "type": "string" },
+          "resetPauseStopDate": { "title": "Reset flag for savings plan pause stop", "type": "string" },
+          "savingsDynamic": {
+            "title": "Dynamic rate at which the savings rate increases in percents",
+            "type": "string"
+          },
+          "savingsDynamicDate": { "title": "Date at which the dynamic rate is applied", "type": "string" },
+          "savingsName": { "title": "Savings plan name", "type": "string" },
+          "savingsNo": { "title": "Savings Plan number", "type": "string" },
+          "savingsRate": { "title": "Rate at which securities will be converted in each interval", "type": "string" },
+          "savingsRateCurrency": { "title": "Savings plan rate currency ", "type": "string" }
+        }
+      },
+      "SavingsPlanChangeOut": {
+        "title": "SavingsPlanChangeOut",
+        "type": "object",
+        "properties": {
+          "id": { "title": "Savings Plan Change ID", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "savingsPlanChanges": {
+            "title": "List of SavingsPlanChanges",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SavingsPlanChangeItemOut" }
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" }
+        }
+      },
+      "SavingsPlanDeleteIn": {
+        "required": ["securitiesAccountNo"],
+        "type": "object",
+        "properties": {
+          "challenge": { "$ref": "#/components/schemas/Challenge" },
+          "delayedExecutionOverride": {
+            "title": "User acknowledgement to continue despite earlier warning about delayed execution of investment",
+            "type": "string"
+          },
+          "entityState": {
+            "title": "EntityState",
+            "type": "string",
+            "enum": ["UNREADY", "HAS_WARNINGS", "READY_FOR_AUTHORIZATION", "AUTHORIZED"]
+          },
+          "id": { "type": "string" },
+          "savingsNoList": { "type": "array", "items": { "type": "string" } },
+          "secondsUntilExpiration": { "type": "integer", "format": "int64" },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" },
+          "transactionId": { "type": "string" },
+          "userId": { "type": "string" }
+        }
+      },
+      "SavingsPlanDeleteOut": {
+        "title": "SavingsPlanDeleteOut",
+        "type": "object",
+        "properties": {
+          "entityState": {
+            "title": "EntityState",
+            "type": "string",
+            "enum": ["UNREADY", "HAS_WARNINGS", "READY_FOR_AUTHORIZATION", "AUTHORIZED"]
+          },
+          "items": {
+            "title": "The list of deleted savings items.",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SavingsPlanItemDelete" }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "securitiesAccountNo": { "title": "The id of the security to save into.", "type": "string" },
+          "status": { "title": "Status of this savings item.", "type": "string" }
+        }
+      },
+      "SavingsPlanDetailsOut": {
+        "title": "SavingsPlanDetailsOut",
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "accountingOpponent": { "title": "Name of the owner of the external account", "type": "string" },
+          "appointments": {
+            "title": "List of appointments.",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SavingsPlanAppointmentOut" }
+          },
+          "bankNameOpponent": { "title": "Bank Name of the external bank", "type": "string" },
+          "bicOpponent": { "title": "Bank Identifier Code of the external bank", "type": "string" },
+          "dateFirstExecution": { "title": "Date at which savings plan may be first executed", "type": "string" },
+          "dateLastExecution": {
+            "title": "Date at which savings plan may be executed for the last time. If not supplied, unlimited is assumed",
+            "type": "string"
+          },
+          "ibanOpponent": { "title": "International Bank Account Number of the external bank", "type": "string" },
+          "interval": { "title": "The interval at which the savings item is executed.", "type": "string" },
+          "intervalDay": {
+            "title": "The day at which this item is executed in each given interval.",
+            "type": "string",
+            "enum": ["DAY_01", "DAY_07", "DAY_15", "DAY_23"]
+          },
+          "orderBookNo": {
+            "title": "The number identifying the position related to this savings plan.",
+            "type": "string"
+          },
+          "pauseStartDate": { "title": "Start date of a pause for savings plan", "type": "string" },
+          "pauseStopDate": { "title": "Date at which savings plan pause can stop", "type": "string" },
+          "positionCurrency": { "title": "The currency of the positionValue.", "type": "string" },
+          "positionValue": { "title": "The current value of this item.", "type": "string" },
+          "savingsCategory": { "title": "Savings plan item category.", "type": "string" },
+          "savingsDynamic": {
+            "title": "Dynamic rate at which the savings rate increases in percents",
+            "type": "string"
+          },
+          "savingsDynamicDate": { "title": "Date at which the dynamic rate is applied", "type": "string" },
+          "savingsName": { "title": "Savings plan item name.", "type": "string" },
+          "savingsRate": { "title": "Rate at which new savings are bought or sold.", "type": "string" },
+          "savingsRateCurrency": { "title": "Savings plan rate currency.", "type": "string" },
+          "securityIsin": { "title": "The id of the security to save into.", "type": "string" },
+          "securityWkn": { "title": "The id of the security to save into.", "type": "string" },
+          "status": { "title": "Status of the savings plan item.", "type": "string" },
+          "type": {
+            "title": "The type of this plan. Only SavingsPlans and PayoutPlans are listed in this service.",
+            "type": "string",
+            "enum": ["SAVINGSPLAN", "PAYOUTPLAN", "SAVE", "PAYOUT"]
+          }
+        }
+      },
+      "SavingsPlanEntryIn": {
+        "title": "SavingsPlanEntryIn",
+        "required": ["dateFirstExecution", "interval", "intervalDay", "savingsPlans", "securitiesAccountNo"],
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "accountingOpponent": { "title": "Name of the owner of the external account", "type": "string" },
+          "bicOpponent": { "title": "Bank Identifier Code of the external bank", "type": "string" },
+          "dateFirstExecution": { "title": "Date at which savings plan may be first executed", "type": "string" },
+          "dateLastExecution": {
+            "title": "Date at which savings plan may be executed for the last time. If not supplied, unlimited is assumed",
+            "type": "string"
+          },
+          "ibanOpponent": { "title": "International Bank Account Number of the external bank", "type": "string" },
+          "interval": { "title": "Interval at which plan is executed", "type": "string" },
+          "intervalDay": { "title": "Interval day at which plan is executed", "type": "string" },
+          "overrideRiskClass": {
+            "title": "User acknowledgement to continue despite earlier warning about exceeded risk class of investment",
+            "type": "string"
+          },
+          "pauseStartDate": { "title": "Start date of a pause for savings plan", "type": "string" },
+          "savingsDynamic": {
+            "title": "Dynamic rate at which the savings rate increases in percents",
+            "type": "string"
+          },
+          "savingsDynamicDate": { "title": "Date at which the dynamic rate is applied", "type": "string" },
+          "savingsName": { "title": "Savings plan name", "type": "string" },
+          "savingsPlans": {
+            "title": "List of SavingsPlans",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SavingsPlanItemIn" }
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" }
+        }
+      },
+      "SavingsPlanEntryOut": {
+        "title": "SavingsPlanEntryOut",
+        "type": "object",
+        "properties": {
+          "accountNo": { "title": "Account number", "type": "string" },
+          "accountingOpponent": { "title": "Name of the owner of the external account", "type": "string" },
+          "bicOpponent": { "title": "Bank Identifier Code of the external bank", "type": "string" },
+          "dateFirstExecution": { "title": "Date at which savings plan may be first executed", "type": "string" },
+          "dateLastExecution": {
+            "title": "Date at which savings plan may be executed for the last time. If not supplied, unlimited is assumed",
+            "type": "string"
+          },
+          "entityState": {
+            "title": "EntityState",
+            "type": "string",
+            "enum": ["UNREADY", "HAS_WARNINGS", "READY_FOR_AUTHORIZATION", "AUTHORIZED"]
+          },
+          "exceptionCode": {
+            "title": "Exception code. Will be set if the savings plan could not be saved.",
+            "type": "string"
+          },
+          "exceptionMessage": {
+            "title": "Exception message. Will be set if the savings plan could not be saved.",
+            "type": "string"
+          },
+          "ibanOpponent": { "title": "International Bank Account Number of the external bank", "type": "string" },
+          "id": { "title": "Savings Plan ID", "type": "string" },
+          "interval": { "title": "Interval at which plan is executed", "type": "string" },
+          "intervalDay": { "title": "Interval day at which plan is executed", "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "overrideRiskClass": {
+            "title": "User acknowledgement to continue despite earlier warning about exceeded risk class of investment",
+            "type": "string"
+          },
+          "pauseStartDate": { "title": "Start date of a pause for savings plan", "type": "string" },
+          "savingsDynamic": {
+            "title": "Dynamic rate at which the savings rate increases in percents",
+            "type": "string"
+          },
+          "savingsDynamicDate": { "title": "Date at which the dynamic rate is applied", "type": "string" },
+          "savingsName": { "title": "Savings plan name", "type": "string" },
+          "savingsPlans": {
+            "title": "List of SavingsPlans",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SavingsPlanItemOut" }
+          },
+          "savingsRateCurrency": { "title": "Savings plan rate currency ", "type": "string" },
+          "secondsUntilExpiration": {
+            "title": "Time to live in seconds for the SavingsPlanEntry",
+            "type": "integer",
+            "format": "int64"
+          },
+          "securitiesAccountNo": { "title": "Securities account number", "type": "string" }
+        }
+      },
+      "SavingsPlanItemDelete": {
+        "title": "SavingsPlanItemDelete",
+        "type": "object",
+        "properties": {
+          "delayedExecutionOverride": { "type": "string" },
+          "exceptionCode": { "type": "string" },
+          "exceptionMessage": { "type": "string" },
+          "savingsNo": { "type": "string" }
+        }
+      },
+      "SavingsPlanItemIn": {
+        "title": "SavingsPlanItemIn",
+        "required": ["savingsRate", "securityWkn"],
+        "type": "object",
+        "properties": {
+          "savingsRate": { "title": "rate at which securities will be converted in each interval", "type": "string" },
+          "securityWkn": { "title": "target security of this savings plan", "type": "string" }
+        }
+      },
+      "SavingsPlanItemOut": {
+        "title": "SavingsPlanItemOut",
+        "type": "object",
+        "properties": {
+          "exAnteCostId": { "title": "ExAnteCost ID", "type": "string" },
+          "exceptionCode": { "type": "string" },
+          "exceptionMessage": { "type": "string" },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "savingsNo": {
+            "title": "ID to keep track which savings plan request belongs to the response",
+            "type": "string"
+          },
+          "savingsRate": { "title": "Rate at which securities will be converted in each interval", "type": "string" },
+          "securityWkn": { "title": "Target security of this savings plan", "type": "string" }
+        }
+      },
+      "SavingsPlanOut": {
+        "title": "SavingsPlanOut",
+        "required": [
+          "creationTime",
+          "interval",
+          "intervalDay",
+          "savingsCategory",
+          "savingsName",
+          "savingsNo",
+          "savingsRate",
+          "savingsRateCurrency",
+          "securityClass",
+          "securityName",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "appointments": {
+            "title": "The appointments for this savings plan",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SavingsPlanAppointmentOut" }
+          },
+          "creationTime": { "title": "Creation time of this savings plan.", "type": "string" },
+          "interval": {
+            "title": "The interval at which this savings item is executed.",
+            "type": "string",
+            "enum": ["MONTHLY", "BIMONTHLY", "QUARTERLY", "HALFYEARLY"]
+          },
+          "intervalDay": {
+            "title": "The day at which this item is executed in each given interval.",
+            "type": "string",
+            "enum": ["DAY_01", "DAY_07", "DAY_15", "DAY_23"]
+          },
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "pauseStartDate": { "title": "The start of the pause if a pause exists.", "type": "string" },
+          "pauseStopDate": { "title": "The end of the pause if a pause exists.", "type": "string" },
+          "positionCurrency": { "title": "The currency of the positionValue.", "type": "string" },
+          "positionValue": { "title": "The current value of this item.", "type": "string" },
+          "savingsCategory": { "title": "Category of this item.", "type": "string" },
+          "savingsName": { "title": "Name of this item.", "type": "string" },
+          "savingsNo": { "title": "The number identifying this savings item.", "type": "string" },
+          "savingsRate": {
+            "title": "The value at which securities are bought or sold for a single savings interval.",
+            "type": "string"
+          },
+          "savingsRateCurrency": { "title": "The currency of the savingsRate value.", "type": "string" },
+          "securityAmount": {
+            "title": "The number of securities possessed under this savings plan item.",
+            "type": "string"
+          },
+          "securityClass": { "title": "The class/type of the security.", "type": "string" },
+          "securityIsin": { "title": "The id of the security to save into.", "type": "string" },
+          "securityName": { "title": "Name of the security to save into.", "type": "string" },
+          "securityWkn": { "title": "The id of the security to save into.", "type": "string" },
+          "status": { "title": "Status of this savings item.", "type": "string" },
+          "type": {
+            "title": "The type of this plan. Only SavingsPlans and PayoutPlans are listed in this service.",
+            "type": "string",
+            "enum": ["SAVINGSPLAN", "PAYOUTPLAN", "SAVE", "PAYOUT"]
+          }
+        }
+      },
+      "SavingsPlanTransactionStateOut": {
+        "type": "object",
+        "properties": {
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "no": { "title": "SavingsPlanTransaction ID", "type": "string" },
+          "state": {
+            "title": "TransactionState",
+            "type": "string",
+            "enum": [
+              "NEW",
+              "AUTHORIZATION_PENDING",
+              "AUTHORIZATION_ACCEPTED",
+              "AUTHORIZATION_ERROR",
+              "AUTHORIZATION_REJECTED",
+              "AUTHORIZATION_USER_OFFLINE",
+              "AUTHORIZATION_USER_TIMEOUT",
+              "AUTHORIZATION_ACCEPTED_DONE",
+              "EXECUTING",
+              "EXECUTION_SUCCESSFUL",
+              "EXECUTION_FAILED",
+              "EXECUTION_TIMED_OUT"
+            ]
+          }
+        }
+      },
+      "SavingsPlansOut": {
+        "title": "SavingsPlanListOut",
+        "type": "object",
+        "properties": {
+          "links": { "type": "array", "items": { "$ref": "#/components/schemas/Link" } },
+          "savingsPlans": {
+            "title": "List of SavingsPlans",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SavingsPlanOut" }
+          },
+          "securitiesAccountBalance": {
+            "title": "The total value available in the given SecuritiesAccount.",
+            "type": "string"
+          },
+          "totalPositionCurrency": {
+            "title": "The currency in which the total position value is supplied in.",
+            "type": "string"
+          },
+          "totalPositionValue": { "title": "The total value of all securities in the savings plan.", "type": "string" }
+        }
+      }
+    },
+    "securitySchemes": { "bearerAuth": { "bearerFormat": "JWT", "scheme": "bearer", "type": "http" } }
+  },
+  "x-readme": { "explorer-enabled": true, "proxy-enabled": true }
+}
