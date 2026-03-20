@@ -1,0 +1,40 @@
+version: 2
+
+updates:
+  # Weekly minor/patch updates for Maven dependencies on main.
+  - package-ecosystem: "maven"
+    directory: "/"
+    target-branch: "main"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "09:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 1
+    groups:
+      minor-patches:
+        patterns: ["*"]
+        update-types: ["patch", "minor"]
+    rebase-strategy: "auto"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # Quarterly major updates for Maven dependencies on main.
+  - package-ecosystem: "maven"
+    directory: "/"
+    target-branch: "main"
+    schedule:
+      interval: "quarterly"
+    open-pull-requests-limit: 1
+    groups:
+      major-bundle:
+        patterns: ["*"]
+        update-types: ["major"]
+    rebase-strategy: "auto"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
